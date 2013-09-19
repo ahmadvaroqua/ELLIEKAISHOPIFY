@@ -95,9 +95,10 @@ $(document).ready(function(){
     $('#product_slider > ul > li > a > img').attr("src", "http://ellie-kai.s3.amazonaws.com/assets/products-304x480/" + product_name + "-" + fabric_sku +  ".jpg");
 
     // For zoom
-    $('#product_slider > ul > li > a > img').attr("data-cloudzoom", "zoomImage: 'http://ellie-kai.s3.amazonaws.com/assets/products-600x947/" + product_name + "-" + fabric_sku +  ".jpg tintColor: '#ffffff'");
-    $('.cloudzoom-zoom > img').attr("src", "http://ellie-kai.s3.amazonaws.com/assets/products-600x947/" + product_name + "-" + fabric_sku + ".jpg");
-    $('.cloudzoom-blank > img').attr("src", "http://ellie-kai.s3.amazonaws.com/assets/products-600x947/" + product_name + "-" + fabric_sku + ".jpg");
+    $('#product_slider > ul > li > a > img').attr("data-cloudzoom", "zoomImage: 'http://ellie-kai.s3.amazonaws.com/assets/products-600x947/" + product_name + "-" + fabric_sku + ".jpg', tintColor: '#ffffff', zoomPosition: 'inside'");
+
+    // Need to rerun CloudZoom in order to pick changes to the DOM after rendering (like fabric swatch picking)
+    $('.cloudzoom').CloudZoom();
 
   });
 
