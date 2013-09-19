@@ -20,7 +20,7 @@
             </div>
           {% else %}
             <a href="{{ image | product_img_url: '1024x1024' }}" class="fancybox" rel="group" title="{{ image.alt | escape }}">
-              <img src="{{ image | product_img_url: 'large' }}" alt="{{ image.alt | escape }}" itemprop="image" data-cloudzoom="zoomImage: '{{ image | product_img_url: '1024x1024' }}', tintColor: '{{ settings.shop_bg_color }}'" class="cloudzoom" />
+              <img src="{{ image | product_img_url: 'large' }}" alt="{{ image.alt | escape }}" itemprop="image" data-cloudzoom="zoomImage: '{{ image | product_img_url: '1024x1024' }}', tintColor: '{{ settings.shop_bg_color }}', zoomPosition: 'inside' " class="cloudzoom" />
             </a>
           {% endif %}
         </li>
