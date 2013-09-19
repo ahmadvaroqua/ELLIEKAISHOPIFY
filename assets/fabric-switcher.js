@@ -2,13 +2,6 @@ $(document).ready(function(){
 
   var shopify_handle = $.url('filename');
 
-  //console.log(handle);
-  /* $.getJSON('http://0.0.0.0:5000/avery-dress-arrays.json',function(data) { */
-  // $.getJSON('http://dressingroom-dev.elliekai.com/products/avery-dress.json',function(data) {
-  // $.getJSON('http://ellie-kai.s3.amazonaws.com/assets/avery-dress.json',function(data) {
-  // http://dressingroom-dev.elliekai.com/products/avery-dress.json
-  //$.getJSON("http://ellie-kai.s3.amazonaws.com/assets/jsons/" + shopify_handle + ".json", function(data) {
-
   //$.getJSON("http://dressingroom-dev.elliekai.com/products/" + shopify_handle + ".json", function(data) {
   $.getJSON("http://dressingroom.elliekai.com/products/" + shopify_handle + ".json", function(data) {
 
@@ -16,8 +9,6 @@ $(document).ready(function(){
     // Need this global for filtering swatches by fabric later
     // after the AJAX call
     json_data = data;
-    /* console.log(data); */
-    //console.log("Number of patterns: " + data.patterns.length);
 
     // -------------------------------
     // Swatches
@@ -110,31 +101,16 @@ $(document).ready(function(){
     var pattern_name = $('#' + swatch_id).attr('--data-name');
 
     // Update the Fabric dropdown
-    // $("#fabric").val($('#' + swatch_id).attr('--data-fabric'));
-    // $('#fabric').trigger('change');
 
-    // Update the hidden pattern field
+    // Update the hidden pattern and fabric fields
     $("#pattern").val(pattern_name);
     $("#fabric").val(fabric_name);
 
+    // Now remove the selected class if any swatch was picked before
+    $("#swatches a").removeClass("selected")
+
     // Update the pattern display so customer knows name of pattern
-    //$("#pattern-name-display").html($('#' + swatch_id).attr('--data-name'));
     $("#pattern-name-display").html(pattern_name + ' (' + fabric_name + ')');
-
-    /*
-    // Update the product image in Flexslider
-    // console.debug($('#' + swatch_id).attr('--data-swatch-index'));
-    var swatch_index = parseInt($('#' + swatch_id).attr('--data-swatch-index'));
-
-    console.debug(swatch_index);
-
-    // $('#product_slider').flexslider($('#' + swatch_id).attr('--data-swatch-index'));
-    $('#product_slider').flexslider(swatch_index);
-    */
-
-    // product_name = $('#' + swatch_id).attr('--data-name');
-    // product_name = shopify_handle;
-    // fabric_sku = $('#' + swatch_id).attr('--data-sku');
 
     $('#product_slider > ul > li').attr("data-thumb", "http://ellie-kai.s3.amazonaws.com/assets/products-304x480/" + product_name + "-" + fabric_sku +  ".jpg");
 
@@ -147,6 +123,7 @@ $(document).ready(function(){
     $('.cloudzoom-zoom > img').attr("src", "http://ellie-kai.s3.amazonaws.com/assets/products-600x947/" + product_name + "-" + fabric_sku + ".jpg");
     $('.cloudzoom-blank > img').attr("src", "http://ellie-kai.s3.amazonaws.com/assets/products-600x947/" + product_name + "-" + fabric_sku + ".jpg");
 
+    // Now highlight which swatch was picked
     $('#' + swatch_id).addClass('selected');
 
   });
