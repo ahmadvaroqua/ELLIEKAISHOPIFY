@@ -41,9 +41,16 @@ $(document).ready(function(){
 
     // -------------------------------
     // Lengths
+    // NOTE: Don't want num_lengths to be a local variable, will need it with the fabric switcher
+    // when showing the name of the swatch (fabric) / length
     var lengths = data.lengths;
-    var num_lengths = lengths.length
+    num_lengths = lengths.length
     console.log("Number of lengths available: " + num_lengths);
+
+    // Don't show length dropdown selector if only one or 0 length options exists
+    if (num_lengths < 2){
+      $('#length-dropdown-selector').hide();
+    }
 
     for (var i = 0; i < lengths.length; i++) {
       var opt = document.createElement('option');
@@ -56,51 +63,18 @@ $(document).ready(function(){
 
   // End of AJAX call
 
-  /*
-  // -------------------------------
-  // When the fabric changes, log it
-  $("#fabric").change(function() {
-
-    //console.log($(this).val());
-    //console.log(json_data);
-
-    filtered = $.fn.filterJSON( json_data.patterns , {
-      property: ["fabric_type"],
-      wrapper: true,
-      value: $(this).val(),
-      checkContains: false,
-      startsWith: true,
-      matchCase: false,
-      avoidDuplicates: true
-    });
-
-    //console.log(filtered);
-    //console.log("filtered.length: " + filtered.length);
-
-    // Empty the swatches first
-    $('#swatches').empty();
-
-    // Now repopulate with whatever fabric was chosen
-    for (var i = 0; i < filtered.length; i++) {
-      $('#swatches').append("<a href='#' id='" + filtered[i].sku + "' --data-sku='" + filtered[i].sku + "' --data-fabric='" + filtered[i].fabric_type + "' --data-name='" + filtered[i].name + "' --data-swatch-index='" + (i + 1) + "'><img src='http://ellie-kai.s3.amazonaws.com/assets/fabrics-new-100x100/" + filtered[i].sku + ".jpg' alt='" + filtered[i].name + "' /></a>");
-    }
-
-  });
-  */
-
   // -------------------------------
   // What happens when you click on a swatch
   $( "#swatches" ).on('click', 'a', function(event) {
+    // Make the anchor tag not actually go anywhere
     event.preventDefault()
 
+    // Set up some local variables
     var swatch_id = $(this).attr('id');
     var product_name = shopify_handle;
-
     var fabric_sku = $('#' + swatch_id).attr('--data-sku');
     var fabric_name = $('#' + swatch_id).attr('--data-fabric');
     var pattern_name = $('#' + swatch_id).attr('--data-name');
-
-    // Update the Fabric dropdown
 
     // Update the hidden pattern and fabric fields
     $("#pattern").val(pattern_name);
@@ -109,22 +83,21 @@ $(document).ready(function(){
     // Now remove the selected class if any swatch was picked before
     $("#swatches a").removeClass("selected")
 
+    // Now highlight which swatch was picked
+    $('#' + swatch_id).addClass('selected');
+
     // Update the pattern display so customer knows name of pattern
     $("#pattern-name-display").html(pattern_name + ' (' + fabric_name + ')');
 
+    // Update the product image with the new selected fabric from swatch
     $('#product_slider > ul > li').attr("data-thumb", "http://ellie-kai.s3.amazonaws.com/assets/products-304x480/" + product_name + "-" + fabric_sku +  ".jpg");
-
     $('#product_slider > ul > li > a').attr("href", "http://ellie-kai.s3.amazonaws.com/assets/products-600x947/" + product_name + "-" + fabric_sku +  ".jpg");
-
     $('#product_slider > ul > li > a > img').attr("src", "http://ellie-kai.s3.amazonaws.com/assets/products-304x480/" + product_name + "-" + fabric_sku +  ".jpg");
 
+    // For zoom
     $('#product_slider > ul > li > a > img').attr("data-cloudzoom", "zoomImage: 'http://ellie-kai.s3.amazonaws.com/assets/products-600x947/" + product_name + "-" + fabric_sku +  ".jpg tintColor: '#ffffff'");
-
     $('.cloudzoom-zoom > img').attr("src", "http://ellie-kai.s3.amazonaws.com/assets/products-600x947/" + product_name + "-" + fabric_sku + ".jpg");
     $('.cloudzoom-blank > img').attr("src", "http://ellie-kai.s3.amazonaws.com/assets/products-600x947/" + product_name + "-" + fabric_sku + ".jpg");
-
-    // Now highlight which swatch was picked
-    $('#' + swatch_id).addClass('selected');
 
   });
 
