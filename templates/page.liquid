@@ -1,0 +1,51 @@
+<div class="sixteen columns clearfix collection_nav">
+  <h1 class="collection_title">
+    {{ page.title }}
+  </h1>
+</div>
+
+<div class="sixteen columns">
+    {{ page.content }}
+</div>
+
+<script type="text/javascript">
+  // https://github.com/websanova/js-url
+  var current_page_value = $.url('file');
+  console.log(current_page_value);
+
+  if (current_page_value == 'find'){
+    console.log("On the trunk show page.")
+
+    // Load up all the public trunk shows
+    //$.getJSON("http://dressingroom.elliekai.com/trunk_shows/public_shows.json", function(data) {
+    //$.getJSON("http://dressingroom-dev.elliekai.com/trunk_shows/public_shows.json", function(data) {
+    $.getJSON("http://dressingroom.elliekai.com/trunk_shows/public_shows.json", function(data) {
+      // Load up the trunk shows
+      source = $("#shows-template").html();
+      template = Handlebars.compile(source);
+      populated_template = template({ shows : data });
+      $("#left-column-shows-list").html(populated_template);
+
+      // Load up the state selector
+      source2 = $("#states-template").html();
+      template2 = Handlebars.compile(source2);
+      populated_template2 = template2({ states : data });
+      $("#find-by-state").html(populated_template2);
+    });
+
+    $(document).on("change", "#pick-a-state", function(){
+      state_picked = $(this).val();
+      //console.log("State changed: " + state_picked);
+      //$.getJSON("http://dressingroom.elliekai.com/trunk_shows/search_results_state.json?state=" + state_picked, function(data) {
+      //$.getJSON("http://dressingroom-dev.elliekai.com/trunk_shows/search_results_state.json?state=" + state_picked, function(data) {
+      $.getJSON("http://dressingroom.elliekai.com/trunk_shows/search_results_state.json?state=" + state_picked, function(data) {
+        source = $("#shows-template").html();
+        template = Handlebars.compile(source);
+        populated_template = template({ shows : data });
+        $("#left-column-shows-list").html(populated_template);
+      });
+    });
+
+  }
+
+</script>

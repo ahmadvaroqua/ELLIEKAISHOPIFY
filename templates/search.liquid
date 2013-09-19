@@ -1,0 +1,92 @@
+{% assign search_pagination = 10 %}
+
+<div class="sixteen columns clearfix collection_nav">
+  <h1 class="collection_title">Search</h1>
+</div>
+
+<div class="sixteen columns">
+  <div class="clearfix breadcrumb">
+
+{% if search.performed %}
+  
+  {% paginate search.results by search_pagination %}
+    
+        <em>{{ search.results_count }} {{ search.results_count | pluralize: 'result', 'results' }} for <strong>"{{search.terms | escape}}"</strong></em>
+      
+      </div>
+    </div>
+  
+    {% if search.results == empty %}    
+    	<div class="clearfix">    
+        <p class="quote">Your search for <strong>"{{search.terms | escape}}"</strong> did not match any products.</p>         
+      </div>
+    {% else %}  
+
+      {% for item in search.results %}
+      
+        <div class="product_row">
+          
+          {% if item.featured_image %}
+            <div class="four columns product_row">
+               <a href="{{ item.url }}" title="{{ item.title | escape }}">
+                 <img src="{{ item.featured_image | product_img_url: 'large' }}" alt="{{ item.title | escape }}" style="margin-bottom:10px" />
+                 <br class="clear" />
+               </a>
+            </div> 
+          {% endif %}
+          
+          <div class="{% if item.featured_image %}twelve{% else %}sixteen{% endif %} columns title_column">
+            <p>
+              <a href="{{item.url }}" title="{{ item.title | escape }}">{{ item.title }}</a>
+            </p> 
+
+            {% if item.price %}
+               <div class="info">                                              
+                <span class="price {% if item.compare_at_price_max > item.price %}sale{% endif %}">
+                  {% if item.available %}
+                    {% if item.price_varies %}
+                      <small><em>from</em></small>
+                    {% endif %}
+                    {{ item.price_min | money }}
+                  {% else %}
+                    <span class="sold_out">{{ settings.sold_out_text }} - </span>{{ item.price_min | money }}
+                  {% endif %}
+                  {% if item.compare_at_price_max > item.price %}
+                    <span class="was_price">{{ item.compare_at_price_max | money }}</span>
+                  {% endif %}
+                </span>
+              </div>
+            {% endif %}
+            
+            <p>
+              {{ item.content | strip_html | truncatewords: 40 | highlight: search.terms | replace: 'Description', '' | replace: 'Dimensions', '' | replace: 'Details', '' | replace: 'Specs', '' | replace: 'Shipping', '' }}
+            </p>         
+          </div>
+        </div>
+        
+        <hr />    
+
+      {% endfor %}
+    {% endif %}
+  
+    {% include 'pagination' %}    
+  {% endpaginate %}
+
+{% else %}
+
+    </div>
+  </div>
+  <div class="clearfix search_page">  
+    <div class="eight columns align_right">
+      <p class="extra_padding search_page_text">
+        Search for anything in our shop.
+      </p>
+    </div>    
+    <div class="eight columns">
+      <form class="search" action="/search">
+        <input type="text" name="q" class="search_box" placeholder="Search..." value="{{ search.terms }}" />
+      </form>
+    </div>
+  </div>
+
+{% endif %}

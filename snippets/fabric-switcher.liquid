@@ -1,0 +1,45 @@
+{% comment %}
+  2013-09-08 16:03:41 AV
+  The javascript that updates these forms can be found in:
+  assets/fabric-switcher.js
+
+  The form elements will be populated via a JSON call that contains this
+  product's properties (size, fabric, pattern and length).
+
+  Sample JSON output:
+  http://ellie-kai.s3.amazonaws.com/assets/avery-dress.json
+
+  This will likely be driven by the Rails CRM.
+  Right now the JSON is stored on S3.
+{% endcomment %}
+
+<div class="select">
+  <label>Size:</label>
+  <select id="size" name='properties[Size]'>
+  </select>
+</div>
+
+{% comment %}
+<div class="select">
+  <label>Fabric:</label>
+  <select id="fabric" name='properties[Fabric]'>
+    <option></option>
+  </select>
+</div>
+{% endcomment %}
+
+<div class="select">
+  <label>Length:</label>
+  <select id="length" name='properties[Length]'>
+  </select>
+</div>
+
+<div class="" id="pattern-name-display">
+</div>
+
+<input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+<input type="hidden" id="pattern" name="properties[Pattern]" value="" />
+<input type="hidden" id="fabric" name="properties[Fabric]" value="" />
+
+<div id="swatches" class="group">
+</div

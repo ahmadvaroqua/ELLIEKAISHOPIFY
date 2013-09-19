@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="robots" content="index,follow">
+
+    {% raw %}
+    <script id="shows-template" type="text/x-handlebars-template">
+      <div class="left-column">
+        <h2>Upcoming Shows</h2>
+        <p>Shows will be updated next week. Stay tuned!</p>
+        {{#each shows}}
+          <div class="show">
+            <h3>{{title}}</h3>
+            <h4>{{location}}</h4>
+            <p class="date">
+              {{start_date}}
+            </p>
+            <p class="details">
+              {{city}}
+            </p>
+          </div>
+        {{/each}}
+      </div>
+    </script>
+
+    <script id="states-template" type="text/x-handlebars-template">
+      <div id="find-by-state">
+        <select id="pick-a-state">
+          <option></option>
+          {{#each states}}
+            <option>{{state}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </script>
+    {% endraw %}
+
+    <title>
+      {% if template contains "index" and page_title != 'Welcome' %}
+        {{ page_title }}
+      {% elsif template contains "index" and pages[settings.homepage].title != blank %}
+        {{ pages[settings.homepage].title }} | {{ shop.name }}
+      {% else %}
+        {{ page_title }}
+        {% if current_tags %}tagged "{{ current_tags }}"{% endif %}
+        {% if current_page != 1 %}Page {{ current_page }}{% endif %}
+        | {{ shop.name }}
+      {% endif %}
+    </title>
+
+    {% if template contains 'list-collections' %}
+      <meta name="description" content="Product collections from {{ shop.name }} - Page {{ current_page}}" />
+    {% elsif page_description != '' %}
+      <meta name="description" content="{{ page_description }}" />
+    {% endif %}
+
+    {% if settings.twitter_username != '' %}
+      <meta name="twitter:card" content="summary">
+      <meta name="twitter:site" content="@{{ settings.twitter_username }}">
+      <meta name="twitter:creator" content="@{{ settings.twitter_username }}">
+    {% endif %}
+
+    {% if template contains 'product' %}
+      <meta property="og:url" content="{{ shop.url }}{{ product.url }}" />
+      <meta property="og:title" content="{{ page_title | escape }}" />
+      <meta property="og:description" content="{{ page_description | escape }}" />
+      <meta property="og:image" content="{{ product.featured_image | product_img_url: 'medium' }}" />
+      <meta property="og:type" content="product" />
+    {% elsif template contains 'article' %}
+      <meta property="og:url" content="{{ shop.url }}{{ article.url }}" />
+      <meta property="og:title" content="{{ page_title | escape }}" />
+      <meta property="og:description" content="{{ page_description | escape }}" />
+      <meta property="og:type" content="article" />
+      {% if article.content contains "<img" %}
+        {% assign src = article.content | split: 'src="' %}
+        {% assign src = src[1] | split: '"' | first | replace: '//cdn', 'http://cdn' | replace: 'http:http://', 'http://' | remove: 'https:' %}
+        {% if src %}<meta property="og:image" content="{{ src }}" />{% endif %}
+      {% endif %}
+    {% else %}
+      {% if settings.use_logo %}
+        <meta property="og:image" content="{{ 'logo.png' | asset_url }}" />
+      {% endif %}
+      <meta property="og:url" content="{{ canonical_url }}" />
+      <meta property="og:title" content="{{ page_title | escape }}" />
+      <meta property="og:description" content="{{ page_description | escape }}" />
+      <meta property="og:type" content="website" />
+    {% endif %}
+
+    <meta name="author" content="{{ shop.name }}">
+
+    <!-- Mobile Specific Metas -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Stylesheets -->
+    {{ 'styles.css' | asset_url | stylesheet_tag }}
+    {{ 'reveal.css' | asset_url | stylesheet_tag }}
+    <!--[if lte IE 8]>
+      {{ 'ie.css' | asset_url | stylesheet_tag }}
+    <![endif]-->
+
+    <!-- Icons -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ 'favicon.png' | asset_url }}">
+    <link rel="canonical" href="{{ canonical_url }}" />
+
+    <!-- Custom Fonts -->
+    <link href='//fonts.googleapis.com/css?family=.|{% if settings.logo_typeface_method == "google_webfonts" %}{{ settings.logo_google_webfont_font }}:light,normal,bold|{% endif %}{% if settings.headline_typeface_method == "google_webfonts" %}{{ settings.headline_google_webfont_font }}:light,normal,bold|{% endif %}{% if settings.nav_typeface_method == "google_webfonts" %}{{ settings.nav_google_webfont_font }}:light,normal,bold|{% endif %}{% if settings.regular_typeface_method == "google_webfonts" %}{{ settings.regular_google_webfont_font }}:light,normal,bold{% endif %}' rel='stylesheet' type='text/css'>
+
+    {% if template contains 'customer' %}
+      {{ "shopify_common.js" | shopify_asset_url | script_tag }}
+      {{ "customer_area.js"  | shopify_asset_url | script_tag }}
+      <!--[if lt IE 7]>
+        {{ 'json2.js' | shopify_asset_url | script_tag }}
+      <![endif]-->
+    {% endif %}
+
+    <!-- jQuery and jQuery fallback -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write("<script src='{{ "jquery-1.8.3.min.js" | asset_url }}'>\x3C/script>")</script>
+    {{ 'app.js' | asset_url | script_tag }}
+    {% if settings.product_slideshow_animation == 'zoom' %}{{ "cloudzoom.js" | asset_url | script_tag }}{% endif %}
+    {{ 'option_selection.js' | shopify_asset_url | script_tag }}
+
+    <!-- This is for URL parsing -->
+    {{ "url.min.js" | asset_url | script_tag }}
+    {{ "jquery.cookie.js" | asset_url | script_tag }}
+    {{ "jquery.reveal.js" | asset_url | script_tag }}
+    {{ "handlebars.js" | asset_url | script_tag }}
+
+    <!-- CORS alternative -->
+    <script src="http://jpillora.com/xdomain/dist/0.5/xdomain.min.js" slave="http://dressingroom.elliekai.com/proxy.html"></script>
+
+    {% comment %}
+      -------------------------------
+      2013-09-08 16:01:03 AV
+      This is for the fabric-switcher and JSON powered forms
+    {% endcomment %}
+    <!-- This is for the fabric-switcher and JSON powered forms -->
+    {% if template contains 'product' %}
+    {{ "filterJSON.plugin.min.js" | asset_url | script_tag }}
+    {{ "fabric-switcher.js" | asset_url | script_tag }}
+    {% endif %}
+
+    {{ content_for_header }}
+
+  </head>
+  <body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+    <div class="ek-header">
+    <div class="container content">
+      <div class="one-third column logo">
+        <a href="{{ shop.url }}" title="{{ shop.name }}">
+          {% if settings.use_logo %}
+            <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" />
+          {% else %}
+            {{ shop.name }}
+          {% endif %}
+        </a>
+      </div>
+
+      <div class="two-thirds column nav">
+        <span class="mobile_hidden">
+          <ul class="top_menu {% if settings.display_search_box %}search_nav{% endif %}">
+            {% if settings.header_share_button %}
+              <li>
+                {% include "social-buttons" with "global" %}
+              </li>
+            {% endif %}
+            {% if settings.top_bar_linklist != blank %}
+              {% for link in linklists[settings.top_bar_linklist].links %}
+                <li>
+                  <a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a>
+                </li>
+              {% endfor %}
+            {% endif %}
+            {% if shop.customer_accounts_enabled %}
+              <li>
+                <a href="/account" title="My Account {% if customer %}({{ customer.email }}){% endif %}">My Account</a>
+              </li>
+              {% if customer %}
+                <li>
+                  {{ "Logout" | customer_logout_link }}
+                </li>
+              {% endif %}
+            {% endif %}
+            {% if settings.display_search_box %}
+              <li>
+                <form class="search" action="/search">
+                  <input type="text" name="q" class="search_box" placeholder="Search..." value="{{ search.terms }}" />
+                </form>
+              </li>
+            {% endif %}
+          </ul>
+          <ul class="main menu">
+            {% for link in linklists[settings.main_linklist].links %}
+              {% if linklists[link.handle] == empty %}
+                <li><a href="{{ link.url }}" title="{{ link.title }}" {% if link.active %}class="active"{% endif %}>{{ link.title }}</a></li>
+              {% else %}
+                <li><a href="{{ link.url }}" title="{{ link.title }}" {% if link.active %}class="active"{% endif %} {% for link in linklists[link.handle].links %}{% if link.active %}class="active"{% endif %}{% endfor %}>{{ link.title }}
+                  <span class="arrow">▾</span></a>
+                  <ul>
+                    {% for link in linklists[link.handle].links %}
+                      {% if linklists[link.handle] == empty %}
+                        <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+                      {% else %}
+                      <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }} <span class="arrow"> ▸</span></a>
+                        <ul>
+                          {% for link in linklists[link.handle].links %}
+                            <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                      {% endif %}
+                    {% endfor %}
+                  </ul>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </span>
+        <ul class="nav_buttons menu">
+          <li class="navicon_button">
+            <a href="#" class="navicon" title="View Menu">Menu</a>
+          </li>
+          <li>
+            <a href="/cart" class="cart {% if cart.item_count > 0 %}active{% endif %}" title="Shopping Cart">Cart{% if cart.item_count > 0 %}<span class="cart_count"> ({{ cart.item_count }})</span>{% endif %}</a>
+          </li>
+        </ul>
+      </div>
+
+      </div>
+
+      {% if settings.featured_content_page != blank %}
+        <div class="sixteen columns">
+          <div class="section clearfix featured_content">
+            {{ pages[settings.featured_content_page].content }}
+          </div>
+        </div>
+      {% endif %}
+
+      {% unless template contains "index" %}
+        <div class="sixteen columns header">&nbsp;</div>
+      {% endunless %}
+    </div>
+
+    <div class="toggle_menu nav">
+      <ul class="mobile_menu">
+        <li>
+          <form class="search" action="/search">
+            <input type="text" name="q" class="search_box" placeholder="Search..." value="{{ search.terms }}" />
+          </form>
+        </li>
+        {% for link in linklists[settings.main_linklist].links %}
+          {% if linklists[link.handle] == empty %}
+            <li {% if link.active %}class="active"{% endif %}><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+          {% else %}
+            <li {% if link.active %}class="active"{% endif %}><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a>
+              <ul>
+                {% for link in linklists[link.handle].links %}
+                  {% if linklists[link.handle] == empty %}
+                    <li {% if link.active %}class="active"{% endif %}><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+                  {% else %}
+                  <li {% if link.active %}class="active"{% endif %}><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a>
+                    <ul>
+                      {% for link in linklists[link.handle].links %}
+                        <li {% if link.active %}class="active"{% endif %}><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </li>
+          {% endif %}
+        {% endfor %}
+        {% if settings.top_bar_linklist != blank %}
+          {% for link in linklists[settings.top_bar_linklist].links %}
+            <li>
+              <a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a>
+            </li>
+          {% endfor %}
+        {% endif %}
+        {% if shop.customer_accounts_enabled %}
+          <li>
+            <a href="/account" title="My Account {% if customer %}({{ customer.email }}){% endif %}">My Account</a>
+          </li>
+          {% if customer %}
+            <li>
+              {{ "Logout" | customer_logout_link }}
+            </li>
+          {% endif %}
+        {% endif %}
+      </ul>
+    </div>
+      {% unless template contains "index" and settings.slideshow_enabled %}
+        <div class="container main content">
+      {% endunless %}
+
+      {% if template contains 'list-collections' %}
+        {% include 'collection-listing' %}
+      {% else %}
+        {{ content_for_layout }}
+      {% endif %}
+    </div> <!-- end container -->
+
+    <div class="footer">
+      <div class="container">
+        <div class="seven columns footer-module">
+          {% if settings.newsletter_enabled %}
+            <h6>{{ settings.newsletter_text }}</h6>
+
+            {% if settings.newsletter_system == 'mailchimp' %}
+              <form action="{{ settings.mailchimp_link }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="contact-form" target="_blank">
+                <input type="email" value="" name="EMAIL" class="required email" id="contact_email" placeholder="Enter your email address...">
+                <input type="submit" value="Sign Up" id="sign_up" name="subscribe" id="mc-embedded-subscribe" class="action_button">
+              </form>
+            {% else %}
+
+              {% comment %}
+              {% form 'customer' %}
+                 {% if form.posted_successfully? %}
+                   <p><em>Thank you for joining our mailing list!</em></p>
+                 {% elsif form.errors %}
+                   {% for field in form.errors %}
+                     <p><em>{{ field }} - {{ form.errors.messages[field] }}</em></p>
+                   {% endfor %}
+                 {% endif %}
+                 <input type="hidden" id="contact_tags" name="contact[tags]" value="prospect,newsletter"/>
+                 <input type="hidden" id="newsletter-first-name" name="contact[first_name]" value="Newsletter" />
+                 <input type="hidden" id="newsletter-last-name" name="contact[last_name]" value="Subscriber" />
+                 <input type="email" id="contact_email" name="contact[email]" required pattern="[^ @]*@[^ @]*" placeholder="Enter your email address..." />
+                 <input type='submit' class="action_button" id="sign_up" value="Sign Up" />
+               {% endform %}
+               {% endcomment %}
+
+            {% if settings.newsletter_description != blank %}
+              <p>{{ settings.newsletter_description }}</p>
+            {% endif %}
+
+              <form action="http://varoquagroup.createsend.com/t/r/s/trlyyuh/" method="post">
+                <input id="fieldEmail" name="cm-trlyyuh-trlyyuh" type="email" required placeholder="email" class="popup-email" style="width: 200px; display: inline;"/>
+                <button type="submit" style="display: inline;">Subscribe</button>
+              </form>
+
+            {% endif %}
+
+            {% comment %}
+            {% if settings.newsletter_description != blank %}
+              <p>{{ settings.newsletter_description }}</p>
+            {% endif %}
+            {% endcomment %}
+
+          {% endif %}
+
+          {% if settings.footer_content_page != blank %}
+            <h6>{{ pages[settings.footer_content_page].title }}</h6>
+            {{ pages[settings.footer_content_page].content }}
+          {% endif %}
+        </div>
+
+        <div class="three columns footer-module">
+          <h6>{{ linklists[settings.footer_linklist_1].title }}</h6>
+          <ul class="footer_menu">
+            {% for link in linklists[settings.footer_linklist_1].links %}
+              <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="three columns footer-module">
+          <h6>{{ linklists[settings.footer_linklist_2].title }}</h6>
+          <ul class="footer_menu">
+            {% for link in linklists[settings.footer_linklist_2].links %}
+              <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <!--
+        <div class="six columns beige-background">
+          <h6>{{ linklists[settings.footer_linklist_1].title }}</h6>
+          <ul class="footer_menu">
+            {% for link in linklists[settings.footer_linklist_1].links %}
+              <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+            {% endfor %}
+          </ul>
+
+          <h6>{{ linklists[settings.footer_linklist_2].title }}</h6>
+          <ul class="footer_menu">
+            {% for link in linklists[settings.footer_linklist_2].links %}
+              <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        -->
+
+        <div class="three columns footer-module">
+          {% if settings.social_icons != 'none' %}
+
+            <h6 class="social">{{ settings.social_text }}</h6>
+
+            <ul class="icons">
+              {% if settings.twitter_link != '' %}
+                <li class="twitter"><a href="{{ settings.twitter_link }}" title="{{ shop.name }} on Twitter" rel="me">Twitter</a></li>
+              {% endif %}
+
+              {% if settings.facebook_link != '' %}
+                <li class="facebook"><a href="{{ settings.facebook_link }}" title="{{ shop.name }} on Facebook" rel="me">Facebook</a></li>
+              {% endif %}
+
+              {% if settings.google_link != '' %}
+                <li class="google"><a href="{{ settings.google_link }}" title="{{ shop.name }} on Google+" rel="publisher">Google+</a></li>
+              {% endif %}
+
+              {% if settings.youtube_link != '' %}
+                <li class="youtube"><a href="{{ settings.youtube_link }}" title="{{ shop.name }} on YouTube" rel="me">YouTube</a></li>
+              {% endif %}
+
+              {% if settings.vimeo_link != '' %}
+                <li class="vimeo"><a href="{{ settings.vimeo_link }}" title="{{ shop.name }} on Vimeo" rel="me">Vimeo</a></li>
+              {% endif %}
+
+              {% if settings.pinterest_link != '' %}
+                <li class="pinterest"><a href="{{ settings.pinterest_link }}" title="{{ shop.name }} on Pinterest" rel="me">Pinterest</a></li>
+              {% endif %}
+
+              {% if settings.tumblr_link != '' %}
+                <li class="tumblr"><a href="{{ settings.tumblr_link }}" title="{{ shop.name }} on Tumblr" rel="me">Tumblr</a></li>
+              {% endif %}
+
+              {% if settings.linkedin_link != '' %}
+                <li class="linkedin"><a href="{{ settings.linkedin_link }}" title="{{ shop.name }} on LinkedIn" rel="me">LinkedIn</a></li>
+              {% endif %}
+
+              {% if settings.flickr_link != '' %}
+                <li class="flickr"><a href="{{ settings.flickr_link }}" title="{{ shop.name }} on Flickr" rel="me">Flickr</a></li>
+              {% endif %}
+
+              {% if settings.instagram_link != '' %}
+                <li class="instagram"><a href="{{ settings.instagram_link }}" title="{{ shop.name }} on Instagram" rel="me">Instagram</a></li>
+              {% endif %}
+
+              {% if settings.blog_rss %}
+                <li class="rss"><a href="{{ blogs[settings.blog_rss].url }}.atom" title="{{ blogs[settings.blog_rss].title }}">{{ blogs[settings.blog_rss].title }} RSS</a></li>
+              {% endif %}
+
+            </ul>
+          {% endif %}
+        </div>
+
+        <div class="sixteen columns">
+          <hr />
+        </div>
+
+        <div class="six columns final-footer">
+          <p class="credits">
+            &copy; {{ "now" | date: "%Y" }} {{ shop.name }}
+          </p>
+        </div>
+
+        <div class="ten columns credits_right final-footer">
+          <!--
+          <p class="credits">
+            {% if settings.display_designed_by == true %}<a href="http://outofthesandbox.com" target="_blank" title="Shopify Themes">Mobilia Ecommerce Theme</a> by Out of the Sandbox. {% endif %}{{ powered_by_link | replace: 'shopify.com', 'shopify.com?ref=out-of-the-sandbox' | replace: 'shopify.ca', 'shopify.ca?ref=out-of-the-sandbox' | replace: 'shopify.com.au', 'shopify.com.au?ref=out-of-the-sandbox' | replace: 'shopify.co.uk', 'shopify.co.uk?ref=out-of-the-sandbox'  | replace: 'shopify.co.nz', 'shopify.co.nz?ref=out-of-the-sandbox' }}
+          </p>
+          -->
+          <div class="payment_methods">
+            {% if settings.use_paypal %}<img src="{{ 'cc-paypal.gif' | asset_url }}" alt="PayPal" />{% endif %}
+            {% if settings.use_google_checkout %}<img src="{{ 'cc-google.gif' | asset_url }}" alt="Google Checkout" />{% endif %}
+            {% if settings.use_visa %}<img src="{{ 'cc-visa.gif' | asset_url }}" alt="Visa" />{% endif %}
+            {% if settings.use_visaelectron %}<img src="{{ 'cc-visaelectron.gif' | asset_url }}" alt="Visa Electron" />{% endif %}
+            {% if settings.use_mastercard %}<img src="{{ 'cc-mastercard.gif' | asset_url }}" alt="Mastercard" />{% endif %}
+            {% if settings.use_amex %}<img src="{{ 'cc-amex.gif' | asset_url }}" alt="American Express" />{% endif %}
+            {% if settings.use_cirrus %}<img src="{{ 'cc-cirrus.gif' | asset_url }}" alt="Cirrus" />{% endif %}
+            {% if settings.use_delta %}<img src="{{ 'cc-delta.gif' | asset_url }}" alt="Delta" />{% endif %}
+            {% if settings.use_discover %}<img src="{{ 'cc-discover.gif' | asset_url }}" alt="Discover" />{% endif %}
+            {% if settings.use_western_union %}<img src="{{ 'cc-westernunion.gif' | asset_url }}" alt="Western Union" />{% endif %}
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- end footer -->
+
+    {% if settings.display_social_buttons or settings.display_social_buttons_blog or settings.header_share_button %}
+      <script type="text/javascript">
+        (function() {
+          var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+          po.src = 'https://apis.google.com/js/plusone.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+      </script>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    {% endif %}
+
+    <!--
+      2013-09-14 12:02:40 AV
+      ELLIEKAIP1 > Dev > Frontend > Shopify > Intro popup
+    -->
+    <!-- Email sign up modal popup for first time clients -->
+    <a href="#" class="popup-link" data-reveal-id="first-time-popup" data-animation="fade" style="display: none;">
+      Popup
+    </a>
+    <div id="first-time-popup" class="reveal-modal">
+      <h1>Welcome to ELLIE KAI</h1>
+      <div class="popup-big-text">
+        <p>Are you ready for a whole new way to shop?</p>
+        <p>
+          At Ellie Kai, we believe what's 'in' is what looks good on you. Choose a timeless style, a distinct fabric, and it's <b>made just for you.</b>
+        </p>
+        <p>
+          Delivered in 3 weeks.
+        </p>
+      </div>
+      <div class="popup-small-text">
+        <p>
+          Since we 'make-to-order' each garment, it's important that you know it will fit perfectly.
+        </p>
+        <p>
+          If you've shopped with us before, welcome back! <a href="/account">Set up your account to shop online</a>.
+        </p>
+        <p>
+          If you are new to Ellie Kai, welcome. Please enter your email &amp; zip and have fun looking around.
+        </p>
+        <p>
+          (We'll connect you with a Consultant to fit you)
+        </p>
+      </div>
+      <div class="popup-form">
+
+        <form action="http://varoquagroup.createsend.com/t/r/s/tluuljh/" method="post">
+          <input id="fieldEmail" name="cm-tluuljh-tluuljh" type="email" required placeholder="email" class="popup-email"/>
+          <input id="fieldjldimt" name="cm-f-jldimt" type="text" placeholder="zip" class="popup-zip"/>
+          <p>
+            Please add me to the Ellie Kai mailing list. Ellie Kai does not share or sell personal information. <a href="/pages/privacy">See Privacy Policy.</a>
+            <input id="listtrlyyuh" name="cm-ol-trlyyuh" type="checkbox" />
+          <p>
+          <button type="submit">Submit</button>
+        </form>
+
+      </div>
+      <a class="close-reveal-modal">&#215;</a>
+    </div>
+    <!-- Javascript to drop a cookie if first time user and show the popup -->
+
+    <script type="text/javascript">
+      var been_here_before_cookie_value = $.cookie('been_here_before');
+
+      if (been_here_before_cookie_value != null){
+        // Customer has been here before. Do nothing for now...
+        //console.log("Been here before: " + been_here_before_cookie_value);
+      }
+      else {
+        // Customer has not been here before
+        // Drop the cookie
+        $.cookie('been_here_before', 'true', { expires: 30, path: '/' });
+        //console.log("First time here in 30 days: " + been_here_before_cookie_value);
+        // Show the popup
+        $('a.popup-link').trigger('click')
+      }
+
+    </script>
+
+  </body>
+</html>
