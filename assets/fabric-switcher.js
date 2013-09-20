@@ -47,9 +47,9 @@ $(document).ready(function(){
     num_lengths = lengths.length
     console.log("Number of lengths available: " + num_lengths);
 
-    // Don't show length dropdown selector if only one or 0 length options exists
-    if (num_lengths < 2){
-      $('#length-dropdown-selector').hide();
+    // Show the length dropdown selector only if there is more than one length option
+    if (num_lengths > 1){
+      $('#length-dropdown-selector').show();
     }
 
     for (var i = 0; i < lengths.length; i++) {
