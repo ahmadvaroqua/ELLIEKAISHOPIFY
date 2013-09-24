@@ -87,7 +87,8 @@ $(document).ready(function(){
     $('#' + swatch_id).addClass('selected');
 
     // Update the pattern display so customer knows name of pattern
-    $("#pattern-name-display").html(pattern_name + ' (' + fabric_name + ')');
+    // $("#pattern-name-display").html(pattern_name + ' (' + fabric_name + ')');
+    $("#pattern-name-display").html(pattern_name + ' (' + fabric_name + ' / ' + fabric_sku + ')');
 
     // Update the product image with the new selected fabric from swatch
     $('#product_slider > ul > li').attr("data-thumb", "http://ellie-kai.s3.amazonaws.com/assets/products-304x480/" + product_name + "-" + fabric_sku +  ".jpg");
