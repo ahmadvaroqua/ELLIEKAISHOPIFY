@@ -566,7 +566,9 @@
         $.cookie('been_here_before', 'true', { expires: 30, path: '/' });
         //console.log("First time here in 30 days: " + been_here_before_cookie_value);
         // Show the popup
-        $('a.popup-link').trigger('click')
+        // 2013-09-23 17:34:19 AV
+        // ELLIEKAIP1 > Dev > Removing Popup on Shopify after Dan requested it
+        //$('a.popup-link').trigger('click')
       }
 
     </script>
