@@ -79,6 +79,7 @@ $(document).ready(function(){
     // Update the hidden pattern and fabric fields
     $("#pattern").val(pattern_name);
     $("#fabric").val(fabric_name);
+    $("#fabric_sku").val(fabric_sku);
 
     // Now remove the selected class if any swatch was picked before
     $("#swatches a").removeClass("selected")
