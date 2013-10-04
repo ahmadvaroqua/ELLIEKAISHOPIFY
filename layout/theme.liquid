@@ -8,16 +8,19 @@
     {% raw %}
     <script id="shows-template" type="text/x-handlebars-template">
       <div class="left-column">
-        <h2>Upcoming Shows</h2>
+        <h2>This Week's Trunk Shows</h2>
         {{#each shows}}
           <div class="show">
             <h3>{{title}}</h3>
             <h4>{{location}}</h4>
             <p class="date">
-              {{start_date}}
+              {{human_dates}}
             </p>
             <p class="details">
               {{city}}
+            </p>
+            <p class="details">
+              Contact for details: <a href="mailto:{{primary_consultant_email}}">{{primary_consultant_email}}</a>
             </p>
           </div>
         {{/each}}
