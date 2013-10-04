@@ -1,11 +1,25 @@
 /* Shopify Wufoo CSS for Ellie Kai Contact Us form */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
 
-input.text, input.search, textarea.textarea {
+.wufoo input.text, .wufoo textarea.textarea {
   border: 1px solid #ccc;
   color: #555;
   padding: 5px;
   border-radius: 2px;
-  background: #f9f9f9;
   font-size: 13px;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: #f9f9f9;
+}
+
+.wufoo {
+  width: 400px;
+  padding: 20px;
+}
+
+.wufoo .info h2 {
+  font-family: 'Open Sans', sans-serif !important;
+  text-rendering: optimizelegibility;
+  font-weight: normal;
+  font-size: 18px;
+  color: #303030;
 }
