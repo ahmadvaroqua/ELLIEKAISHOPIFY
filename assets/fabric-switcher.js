@@ -59,6 +59,22 @@ $(document).ready(function(){
       $('#length').append(opt);
     }
 
+    // -------------------------------
+    // Buttons
+    var buttons = data.buttons;
+    num_buttons = buttons.length
+
+    if (num_buttons > 1){
+      $('#buttons-dropdown-selector').show();
+    }
+
+    for (var i = 0; i < buttons.length; i++) {
+      var opt = document.createElement('option');
+      opt.value = buttons[i].button;
+      opt.text = buttons[i].button;
+      $('#buttons').append(opt);
+    }
+
   });
 
   // End of AJAX call
