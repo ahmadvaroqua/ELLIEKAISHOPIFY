@@ -1,9 +1,26 @@
-$(document).ready(function(){
+//$(document).ready(function(){
+$(window).load(function() {
+
+  // Browser Sniffing
+  console.log($.browser);
+  console.log($.browser.version);
+
+  // Check if old Safari
+  if ($.browser.safari == true && parseFloat($.browser.version) < 536){
+    console.log("Old Safari");
+    $('a.outdated-browser-popup-link').trigger('click')
+  }
+
+  // Check if old IE
+  if ($.browser.msie == true && parseFloat($.browser.version) < 10){
+    console.log("Old IE");
+    $('a.outdated-browser-popup-link').trigger('click')
+  }
 
   var shopify_handle = $.url('filename');
 
-  //$.getJSON("http://dressingroom-dev.elliekai.com/products/" + shopify_handle + ".json", function(data) {
-  $.getJSON("http://dressingroom.elliekai.com/products/" + shopify_handle + ".json", function(data) {
+  //$.getJSON("http://dressingroom.elliekai.com/products/" + shopify_handle + ".json", function(data) {
+  var request = $.get("http://dressingroom.elliekai.com/products/" + shopify_handle + ".json").done(function(data) {
 
     // -------------------------------
     // Need this global for filtering swatches by fabric later
@@ -75,6 +92,15 @@ $(document).ready(function(){
       $('#buttons').append(opt);
     }
 
+  });
+
+  request.done(function( msg ) {
+    console.log("AJAX Request complete.");
+  });
+
+  request.fail(function( jqXHR, textStatus, errorThrown ) {
+    console.log( "AJAX Request failed, textStatus: " + textStatus );
+    console.log( "AJAX Request failed, errorThrown: " + errorThrown );
   });
 
   // End of AJAX call

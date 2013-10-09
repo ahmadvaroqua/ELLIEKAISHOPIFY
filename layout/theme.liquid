@@ -112,6 +112,9 @@
     <!-- Custom Fonts -->
     <link href='//fonts.googleapis.com/css?family=.|{% if settings.logo_typeface_method == "google_webfonts" %}{{ settings.logo_google_webfont_font }}:light,normal,bold|{% endif %}{% if settings.headline_typeface_method == "google_webfonts" %}{{ settings.headline_google_webfont_font }}:light,normal,bold|{% endif %}{% if settings.nav_typeface_method == "google_webfonts" %}{{ settings.nav_google_webfont_font }}:light,normal,bold|{% endif %}{% if settings.regular_typeface_method == "google_webfonts" %}{{ settings.regular_google_webfont_font }}:light,normal,bold{% endif %}' rel='stylesheet' type='text/css'>
 
+    <!-- CORS alternative -->
+    <script src="http://jpillora.com/xdomain/dist/0.5/xdomain.min.js" slave="http://dressingroom.elliekai.com/proxy.html"></script>
+
     {% if template contains 'customer' %}
       {{ "shopify_common.js" | shopify_asset_url | script_tag }}
       {{ "customer_area.js"  | shopify_asset_url | script_tag }}
@@ -123,6 +126,12 @@
     <!-- jQuery and jQuery fallback -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script>window.jQuery || document.write("<script src='{{ "jquery-1.8.3.min.js" | asset_url }}'>\x3C/script>")</script>
+
+    <!-- NOTE: This is a temp test file -->
+    {% comment %}
+    {{ "ajax.js" | asset_url | script_tag }}
+    {% endcomment %}
+
     {{ 'app.js' | asset_url | script_tag }}
     {% if settings.product_slideshow_animation == 'zoom' %}{{ "cloudzoom.js" | asset_url | script_tag }}{% endif %}
     {{ 'option_selection.js' | shopify_asset_url | script_tag }}
@@ -134,7 +143,9 @@
     {{ "handlebars.js" | asset_url | script_tag }}
 
     <!-- CORS alternative -->
+    <!--
     <script src="http://jpillora.com/xdomain/dist/0.5/xdomain.min.js" slave="http://dressingroom.elliekai.com/proxy.html"></script>
+    -->
 
     {% comment %}
       -------------------------------
@@ -151,6 +162,8 @@
 
   </head>
   <body>
+
+    <!--
     <div id="fb-root"></div>
     <script>(function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
@@ -159,6 +172,7 @@
       js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
+    -->
 
     <div class="ek-header">
     <div class="container content">
@@ -575,6 +589,34 @@
       }
 
     </script>
+
+    <!-- Popup for outdated browsers -->
+    <a href="#" class="outdated-browser-popup-link" data-reveal-id="outdated-browser-popup" data-animation="fade" style="display: none;">
+      Popup
+    </a>
+    <div id="outdated-browser-popup" class="reveal-modal">
+      <h1>Please update your browser</h1>
+      <div class="popup-big-text">
+        <p>
+          The Ellie Kai website takes advantage of the latest web technologies available.
+        </p>
+        <p>
+          We recommend you update to one of the following browsers so that you can experience all that EllieKai.com has to offer:
+        </p>
+        <p>
+          <ul>
+            <li><a href="http://www.google.com/chrome" target="_blank" style="text-decoration: underline;">Google Chrome</a></li>
+            <li><a href="http://www.apple.com/safari" target="_blank" style="text-decoration: underline;">Safari 6</a></li>
+            <li><a href="http://www.mozilla.org/en-US/firefox/new/" target="_blank" style="text-decoration: underline;">Firefox</a></li>
+          </ul>
+        </p>
+        <p>
+          Certain features like the ability to see products in different fabrics are unavailable until you upgrade your browser.
+        </p>
+      </div>
+
+      <a class="close-reveal-modal">&#215;</a>
+    </div>
 
   </body>
 </html>
