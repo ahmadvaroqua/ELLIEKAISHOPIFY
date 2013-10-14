@@ -113,7 +113,9 @@
     <link href='//fonts.googleapis.com/css?family=.|{% if settings.logo_typeface_method == "google_webfonts" %}{{ settings.logo_google_webfont_font }}:light,normal,bold|{% endif %}{% if settings.headline_typeface_method == "google_webfonts" %}{{ settings.headline_google_webfont_font }}:light,normal,bold|{% endif %}{% if settings.nav_typeface_method == "google_webfonts" %}{{ settings.nav_google_webfont_font }}:light,normal,bold|{% endif %}{% if settings.regular_typeface_method == "google_webfonts" %}{{ settings.regular_google_webfont_font }}:light,normal,bold{% endif %}' rel='stylesheet' type='text/css'>
 
     <!-- CORS alternative -->
+    <!--
     <script src="http://jpillora.com/xdomain/dist/0.5/xdomain.min.js" slave="http://dressingroom.elliekai.com/proxy.html"></script>
+    -->
 
     {% if template contains 'customer' %}
       {{ "shopify_common.js" | shopify_asset_url | script_tag }}
@@ -126,6 +128,9 @@
     <!-- jQuery and jQuery fallback -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script>window.jQuery || document.write("<script src='{{ "jquery-1.8.3.min.js" | asset_url }}'>\x3C/script>")</script>
+
+    <!-- NOTE: To make CORS work with IE 8 and 9 -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.0/jquery.xdomainrequest.min.js"></script>
 
     <!-- NOTE: This is a temp test file -->
     {% comment %}
@@ -591,6 +596,7 @@
     </script>
 
     <!-- Popup for outdated browsers -->
+    <!--
     <a href="#" class="outdated-browser-popup-link" data-reveal-id="outdated-browser-popup" data-animation="fade" style="display: none;">
       Popup
     </a>
@@ -617,6 +623,7 @@
 
       <a class="close-reveal-modal">&#215;</a>
     </div>
+    -->
 
   </body>
 </html>

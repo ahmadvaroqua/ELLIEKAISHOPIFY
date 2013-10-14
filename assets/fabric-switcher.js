@@ -1,6 +1,7 @@
 //$(document).ready(function(){
 $(window).load(function() {
 
+  /*
   // Browser Sniffing
   console.log($.browser);
   console.log($.browser.version);
@@ -16,11 +17,12 @@ $(window).load(function() {
     console.log("Old IE");
     $('a.outdated-browser-popup-link').trigger('click')
   }
+  */
 
   var shopify_handle = $.url('filename');
 
   //$.getJSON("http://dressingroom.elliekai.com/products/" + shopify_handle + ".json", function(data) {
-  var request = $.get("http://dressingroom.elliekai.com/products/" + shopify_handle + ".json").done(function(data) {
+  var request = $.getJSON("http://dressingroom.elliekai.com/products/" + shopify_handle + ".json").done(function(data) {
 
     // -------------------------------
     // Need this global for filtering swatches by fabric later
