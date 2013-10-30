@@ -33,9 +33,15 @@ $(window).load(function() {
     // Swatches
     for (var i = 0; i < data.patterns.length; i++) {
       $('#swatches').append("<a href='#' id='" + data.patterns[i].sku + "' --data-sku='" + data.patterns[i].sku + "' --data-fabric='" + data.patterns[i].fabric_type + "' --data-name='" + data.patterns[i].name + "' --data-swatch-index='" + (i + 1) + "'><img src='http://ellie-kai.s3.amazonaws.com/assets/fabrics-new-100x100/" + data.patterns[i].sku + ".jpg' alt='" + data.patterns[i].name + "'/></a>");
-
     }
-
+    
+    // If there are swatches, enforce validation, i.e. must pick one.
+    if (data.patterns.length > 0){            
+  	  $('#add-to-cart').addClass("disabled-button");
+  	  $('#add-to-cart').attr("disabled", "true");
+  	  $("#pattern-name-display").html("Please select a fabric:");      
+    }
+            
     // -------------------------------
     // Sizes
     var sizes = data.sizes;
@@ -143,6 +149,11 @@ $(window).load(function() {
     // For zoom
     $('#product_slider > ul > li > a > img').attr("data-cloudzoom", "zoomImage: 'http://ellie-kai.s3.amazonaws.com/assets/products-600x947/" + product_name + "-" + fabric_sku + ".jpg', tintColor: '#ffffff', zoomPosition: 'inside'");
 
+    // Fabric was selected, activate the add-to-cart button:
+	console.log("A fabric was picked. Activate the add-to-cart button.");
+    $('#add-to-cart').removeClass("disabled-button");
+  	$('#add-to-cart').removeAttr("disabled");      
+    
     // Need to rerun CloudZoom in order to pick changes to the DOM after rendering (like fabric swatch picking)
     $('.cloudzoom').CloudZoom();
 
