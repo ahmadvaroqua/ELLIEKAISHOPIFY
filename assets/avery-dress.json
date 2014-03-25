@@ -1,0 +1,126 @@
+{
+  "product": "avery-dress",
+  "sizes": [
+    {
+      "size": "0"
+    },
+    {
+      "size": "2"
+    },
+    {
+      "size": "4"
+    },
+    {
+      "size": "6"
+    },
+    {
+      "size": "8"
+    },
+    {
+      "size": "10"
+    },
+    {
+      "size": "12"
+    },
+    {
+      "size": "14"
+    }
+  ],
+  "fabrics": [
+    {
+      "fabric_type": "Silk"
+    }
+  ],
+  "patterns": [
+    {
+      "fabric_type": "Silk",
+      "sku": "S79",
+      "name": "Exchange Warm Red"
+    },
+    {
+      "fabric_type": "Silk",
+      "sku": "S80",
+      "name": "Exchange Mocha"
+    },
+    {
+      "fabric_type": "Silk",
+      "sku": "S81",
+      "name": "Ledge"
+    },
+    {
+      "fabric_type": "Silk",
+      "sku": "S82",
+      "name": "Connect"
+    },
+    {
+      "fabric_type": "Silk",
+      "sku": "S83",
+      "name": "Hampton Stripe"
+    },
+    {
+      "fabric_type": "Silk",
+      "sku": "S84",
+      "name": "Jigsaw"
+    },
+    {
+      "fabric_type": "Silk",
+      "sku": "S85",
+      "name": "Palm"
+    },
+    {
+      "fabric_type": "Silk",
+      "sku": "S86",
+      "name": "Zen"
+    },
+    {
+      "fabric_type": "Silk",
+      "sku": "SS1",
+      "name": "Ivory"
+    },
+    {
+      "fabric_type": "Silk",
+      "sku": "SS2",
+      "name": "Stone"
+    },
+    {
+      "fabric_type": "Silk",
+      "sku": "SS3",
+      "name": "Fall Fuschia"
+    },
+    {
+      "fabric_type": "Silk",
+      "sku": "SS4",
+      "name": "Spicy Orange"
+    },
+    {
+      "fabric_type": "Silk",
+      "sku": "SS5",
+      "name": "Ink Blue"
+    },
+    {
+      "fabric_type": "Silk",
+      "sku": "SS6",
+      "name": "Navy"
+    },
+    {
+      "fabric_type": "Silk",
+      "sku": "SS7",
+      "name": "Mocha"
+    },
+    {
+      "fabric_type": "Silk",
+      "sku": "SS8",
+      "name": "Blackberry"
+    },
+    {
+      "fabric_type": "Silk",
+      "sku": "SS9",
+      "name": "Black"
+    }
+  ],
+  "lengths": [
+    {
+      "length": "36"
+    }
+  ]
+}
