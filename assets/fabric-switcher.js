@@ -57,6 +57,7 @@ $(window).load(function() {
     // -------------------------------
     // Sizes
     var sizes = data.sizes;
+    num_sizes = sizes.length
 
     for (var i = 0; i < sizes.length; i++) {
       var opt = document.createElement('option');
@@ -190,8 +191,8 @@ $(window).load(function() {
 	  // console.log("Available sizes: " + num_lengths);
 
     // If there is more than one length option and no size is picked, disable the add to cart button.
-    if (num_lengths > 1 && !size){
-	    // console.log("Please select a size.");
+    if (num_sizes > 1 && !size){
+	    console.log("Please select a size.");
 
   	  $("#size-validation-message").html("Please select a size:");
       $('#add-to-cart').addClass("disabled-button");
