@@ -21,8 +21,23 @@ $(window).load(function() {
 
   var shopify_handle = $.url('filename');
 
-  //$.getJSON("http://dressingroom.elliekai.com/products/" + shopify_handle + ".json", function(data) {
-  var request = $.getJSON("http://dressingroom.elliekai.com/products/" + shopify_handle + ".json").done(function(data) {
+  //-------------------------------
+  // Figure out if we are in dev or production mode
+  var subdomain = $.url('sub');
+
+  if (subdomain === 'shop-dev'){
+    console.log("Development mode");
+    var json_url = "http://dressingroom-dev.elliekai.com/products/";
+  }
+  else {
+    console.log("Production mode");
+    var json_url = "http://dressingroom.elliekai.com/products/";
+  }
+  //-------------------------------
+
+  // var request = $.getJSON("http://dressingroom.elliekai.com/products/" + shopify_handle + ".json").done(function(data) {
+  // var request = $.getJSON("http://dressingroom-dev.elliekai.com/products/" + shopify_handle + ".json").done(function(data) {
+  var request = $.getJSON(json_url + shopify_handle + ".json").done(function(data) {
 
     // -------------------------------
     // Need this global for filtering swatches by fabric later
@@ -64,6 +79,12 @@ $(window).load(function() {
       opt.value = sizes[i].size;
       opt.text = sizes[i].size;
       $('#size').append(opt);
+    }
+
+    // Hide the size dropdown if only one or 0 sizes available
+    if (num_sizes <= 1){
+      console.log("Only 1 or 0 sizes.");
+      $('#size-dropdown').hide();
     }
 
     // -------------------------------
