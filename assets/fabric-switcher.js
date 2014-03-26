@@ -44,6 +44,16 @@ $(window).load(function() {
   	  $("#pattern-name-display").html("Please select a fabric:");
     }
 
+    /*
+    console.log("Number of sizes available: " + data.sizes.length);
+    // If there is more than one size, enforce validation
+    if (data.sizes.length > 0){
+  	  $('#add-to-cart').addClass("disabled-button");
+  	  $('#add-to-cart').attr("disabled", "true");
+  	  $("#pattern-name-display").html("Please select a size:");
+    }
+    */
+
     // -------------------------------
     // Sizes
     var sizes = data.sizes;
@@ -72,7 +82,7 @@ $(window).load(function() {
     // when showing the name of the swatch (fabric) / length
     var lengths = data.lengths;
     num_lengths = lengths.length
-    console.log("Number of lengths available: " + num_lengths);
+    // console.log("Number of lengths available: " + num_lengths);
 
     // Show the length dropdown selector only if there is more than one length option
     if (num_lengths > 1){
@@ -116,6 +126,28 @@ $(window).load(function() {
   // End of AJAX call
 
   // -------------------------------
+  // What happens when a size is picked
+  $("#size").change(function(){
+    var size = $('#size').val();
+    // console.log("Size changed to: " + size);
+  	$("#size-validation-message").html("");
+
+    var fabric = $("#fabric").val();
+    // console.log("Current fabric is: " + fabric);
+
+    if (!fabric) {
+      // console.log("No fabric.");
+      // Don't activate the Add to Cart button
+    }
+    else {
+      // console.log("We have a fabric");
+      // We have a fabric selected so safe to activate the Add to Cart button
+      $('#add-to-cart').removeClass("disabled-button");
+  	  $('#add-to-cart').removeAttr("disabled");
+    }
+  });
+
+  // -------------------------------
   // What happens when you click on a swatch
   $( "#swatches" ).on('click', 'a', function(event) {
     // Make the anchor tag not actually go anywhere
@@ -152,9 +184,28 @@ $(window).load(function() {
     $('#product_slider > ul > li > a > img').attr("data-cloudzoom", "zoomImage: 'http://ellie-kai.s3.amazonaws.com/assets/products-600x947/" + product_name + "-" + fabric_sku + ".jpg', tintColor: '#ffffff', zoomPosition: 'inside'");
 
     // Fabric was selected, activate the add-to-cart button:
-	console.log("A fabric was picked. Activate the add-to-cart button.");
-    $('#add-to-cart').removeClass("disabled-button");
-  	$('#add-to-cart').removeAttr("disabled");
+    var size = $('#size').val();
+
+	  // console.log("Selected size: " + size);
+	  // console.log("Available sizes: " + num_lengths);
+
+    // If there is more than one length option and no size is picked, disable the add to cart button.
+    if (num_lengths > 1 && !size){
+	    // console.log("Please select a size.");
+
+  	  $("#size-validation-message").html("Please select a size:");
+      $('#add-to-cart').addClass("disabled-button");
+  	  $('#add-to-cart').attr("disabled");
+    }
+    else {
+      $('#add-to-cart').removeClass("disabled-button");
+  	  $('#add-to-cart').removeAttr("disabled");
+    }
+
+    // Fabric was selected, activate the add-to-cart button:
+	  // console.log("A fabric was picked. Activate the add-to-cart button.");
+    // $('#add-to-cart').removeClass("disabled-button");
+  	// $('#add-to-cart').removeAttr("disabled");
 
     // Need to rerun CloudZoom in order to pick changes to the DOM after rendering (like fabric swatch picking)
     $('.cloudzoom').CloudZoom();
