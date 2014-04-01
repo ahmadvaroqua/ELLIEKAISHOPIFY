@@ -105,6 +105,7 @@
       {{ 'ie.css' | asset_url | stylesheet_tag }}
     <![endif]-->
 
+
     <!-- Icons -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ 'favicon.png' | asset_url }}">
     <link rel="canonical" href="{{ canonical_url }}" />
@@ -124,7 +125,9 @@
         {{ 'json2.js' | shopify_asset_url | script_tag }}
       <![endif]-->
     {% endif %}
-
+<link rel="stylesheet" href="//releases.flowplayer.org/5.4.6/skin/minimalist.css" >
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="//releases.flowplayer.org/5.4.6/flowplayer.min.js"></script>
     <!-- jQuery and jQuery fallback -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script>window.jQuery || document.write("<script src='{{ "jquery-1.8.3.min.js" | asset_url }}'>\x3C/script>")</script>
@@ -260,6 +263,40 @@
           </li>
         </ul>
       </div>
+      <!--
+      <div class="sixteen columns clearfix collection_nav">
+    <h1 class="collection_title {% if settings.collection_tags and tag_count < tag_threshold %}collection_title_tags{% endif %}"><a href="{% if collection.handle == "all" %}/collections/all{% else %}{{ collection.url }}{% endif %}" title="{{ collection.title | escape }}">{{ collection.title }}</a></h1>
+    {% if settings.collection_tags %}
+      {% if tag_count < tag_threshold %}
+        <ul class="collection_menu">
+          <li>
+            <a href="{% if collection.handle == "all" %}/collections/all{% else %}{{ collection.url }}{% endif %}">{% if current_tags %}All{% else %}<span class="active">All</span>{% endif %}</a>
+          </li>
+          {% for tag in collection.all_tags %}
+            {% unless tag contains 'meta-related-collection-' %}
+              <li>
+                {{ tag | highlight_active_tag | link_to_tag: tag }}
+              </li>
+            {% endunless %}
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endif %}
+
+    {% if settings.collection_tags %}
+      <select name="tag_filter" id="tag_filter" {% if tag_count >= tag_threshold %}style="display:block"{% endif %}>
+        <option {% unless current_tags %}selected="selected"{% endunless %} value="{% if collection.handle == "all" %}/collections/all{% else %}{{ collection.url }}{% endif %}">All</option>
+        {% for tag in collection.all_tags %}
+          {% unless tag contains 'meta-related-collection-' %}
+            <option {% if current_tags contains tag %}selected="selected"{% endif %} value="/collections/{% if collection.handle != blank %}{{ collection.handle }}{% else %}all{% endif %}/{{ tag | handleize }}">{{ tag }}</option>
+          {% endunless %}
+        {% endfor %}
+      </select>
+    {% endif %}
+  </div>
+
+      -->
+      
 
       </div>
 
@@ -272,7 +309,9 @@
       {% endif %}
 
       {% unless template contains "index" %}
+      <!--
         <div class="sixteen columns header">&nbsp;</div>
+-->
       {% endunless %}
     </div>
 
@@ -326,7 +365,7 @@
       </ul>
     </div>
       {% unless template contains "index" and settings.slideshow_enabled %}
-        <div class="container main content">
+    <div class="container main content" style="padding-bottom: 30px;">
       {% endunless %}
 
       {% if template contains 'list-collections' %}
@@ -337,8 +376,8 @@
     </div> <!-- end container -->
 
     <div class="footer">
-      <div class="container">
-        <div class="seven columns footer-module">
+      <div class="container" style="padding:0px;">
+        <div class="seven columns2 footer-module">
           {% if settings.newsletter_enabled %}
             <h6>{{ settings.newsletter_text }}</h6>
 
@@ -391,20 +430,20 @@
           {% endif %}
         </div>
 
-        <div class="three columns footer-module">
+        <div class="three columns2 footer-module">
           <h6>{{ linklists[settings.footer_linklist_1].title }}</h6>
           <ul class="footer_menu">
             {% for link in linklists[settings.footer_linklist_1].links %}
-              <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+           <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
             {% endfor %}
           </ul>
         </div>
 
-        <div class="three columns footer-module">
+        <div class="three columns2 footer-module">
           <h6>{{ linklists[settings.footer_linklist_2].title }}</h6>
           <ul class="footer_menu">
             {% for link in linklists[settings.footer_linklist_2].links %}
-              <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+            <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
             {% endfor %}
           </ul>
         </div>
@@ -427,10 +466,10 @@
         </div>
         -->
 
-        <div class="three columns footer-module">
+        <div class="three columns2 footer-module">
           {% if settings.social_icons != 'none' %}
 
-            <h6 class="social">{{ settings.social_text }}</h6>
+          <h6 class="social"><b>{{ settings.social_text }}</b></h6>
 
             <ul class="icons">
               {% if settings.twitter_link != '' %}
@@ -481,17 +520,14 @@
           {% endif %}
         </div>
 
-        <div class="sixteen columns">
-          <hr />
-        </div>
-
-        <div class="six columns final-footer">
+	<div class="footer-bg">
+        <div class="six columns2 final-footer">
           <p class="credits">
             &copy; {{ "now" | date: "%Y" }} {{ shop.name }}
           </p>
         </div>
 
-        <div class="ten columns credits_right final-footer">
+      <div class="ten columns2 credits_right final-footer" style="float: right;">
           <!--
           <p class="credits">
             {% if settings.display_designed_by == true %}<a href="http://outofthesandbox.com" target="_blank" title="Shopify Themes">Mobilia Ecommerce Theme</a> by Out of the Sandbox. {% endif %}{{ powered_by_link | replace: 'shopify.com', 'shopify.com?ref=out-of-the-sandbox' | replace: 'shopify.ca', 'shopify.ca?ref=out-of-the-sandbox' | replace: 'shopify.com.au', 'shopify.com.au?ref=out-of-the-sandbox' | replace: 'shopify.co.uk', 'shopify.co.uk?ref=out-of-the-sandbox'  | replace: 'shopify.co.nz', 'shopify.co.nz?ref=out-of-the-sandbox' }}
@@ -508,7 +544,7 @@
               }
             </style>
 
-            <div class="AuthorizeNetSeal"> <script type="text/javascript" language="javascript">var ANS_customer_id="22e19ae0-04e0-4944-bb8c-f05343d6b133";</script> <script type="text/javascript" language="javascript" src="//verify.authorize.net/anetseal/seal.js" ></script><br /><a href="http://www.authorize.net/" id="AuthorizeNetText" target="_blank">Accept Credit Cards</a> </div>
+          
 
             {% if settings.use_paypal %}<img src="{{ 'cc-paypal.gif' | asset_url }}" alt="PayPal" />{% endif %}
             {% if settings.use_google_checkout %}<img src="{{ 'cc-google.gif' | asset_url }}" alt="Google Checkout" />{% endif %}
@@ -522,6 +558,7 @@
             {% if settings.use_western_union %}<img src="{{ 'cc-westernunion.gif' | asset_url }}" alt="Western Union" />{% endif %}
           </div>
         </div>
+      </div>
       </div>
 
     </div> <!-- end footer -->

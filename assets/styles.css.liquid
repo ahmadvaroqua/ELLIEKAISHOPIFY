@@ -141,7 +141,7 @@ h4.title a { border-bottom: 0; padding-bottom: 0; margin-bottom: 0;}
 h5, .h5 { font-size: 20px; padding-bottom: 1em; }
 h5.sub_title { padding-bottom: 5px; }
 h6, .h6 { font-size: 16px; padding-bottom: 1em;}
-.footer h6 { color: {{ settings.headline_footer_text_color }}; }
+.footer h6 { color: {{ settings.headline_footer_text_color }}; font-size: 14px; font-weight: bold; }
 .subheader { color: #777; }
 p { margin: 0 0 15px; font-style: normal; line-height: 1.7em; }
 p img { margin: 0; }
@@ -412,16 +412,16 @@ ul.top_menu li a:hover {
 }
 
 .container div.collection_nav {
-  border-bottom: solid 1px {{ settings.border_color }};
-  padding-bottom: 15px;
-  margin-bottom: 1.5em;
+  	
+  padding-bottom: 20px;
+  margin-bottom: 0em;
 }
 .collection_menu, .collection_menu li {
   display: inline;
   list-style: none;
   border: none;
   position: relative;
-  top: -3px;
+  top: 0px;
   margin: 0;
 }
 .collection_menu li {
@@ -433,7 +433,7 @@ ul.top_menu li a:hover {
 }
 
 .collection_menu li span.active {
-  color: {{ settings.nav_color_active }};
+  color: {{ settings.nav_color_active }}; font-size: 18px; line-height: 18px;
 }
 
 .collection_menu li a:hover, .collection_menu li span.active:hover {
@@ -856,6 +856,7 @@ div.hidden { display: none; }
   }
   div.main.content {
     padding-top: 0px;
+    border-left: 1px solid #dce3e5; border-right: 1px solid #dce3e5;
   }
   .logo a {
     margin: 0;
@@ -863,7 +864,7 @@ div.hidden { display: none; }
     display:block;
   }
   div.section {
-     margin: 10px 0;
+     margin: 0px 0;
   }
   .homepage_content {
     {% if settings.shop_use_home_page_content_bg_color %}
@@ -1250,7 +1251,7 @@ div.hidden { display: none; }
     font-size: {{ settings.footer_font_size }}px;
     line-height: 1.7em;
     color: {{ settings.footer_text_color }};
-    padding: 10px 0;
+    padding: 0px 0;   
   }
   .footer p {
     margin-bottom: 10px;
@@ -1292,6 +1293,10 @@ div.hidden { display: none; }
   }
   .credits_right {
     text-align: right;
+  	color: #ffffff;
+  }
+  .credits {
+  	color: #ffffff;
   }
   .icons {
     list-style: none outside;
@@ -1801,6 +1806,7 @@ div.cloudzoom-ajax-loader {
     .container                                  { position: relative; width: 960px; margin: 0 auto; padding: 0; }
     .container .column,
     .container .columns                         { float: left; display: inline; margin-left: 10px; margin-right: 10px; }
+	.container .columns2                         { float: left; display: inline; margin-left: 0px; margin-right: 0px; }
     .row                                        { margin-bottom: 20px; }
 
     /* Nested Column Classes */
@@ -1824,7 +1830,7 @@ div.cloudzoom-ajax-loader {
     .container .thirteen.columns                { width: 760px; }
     .container .fourteen.columns                { width: 820px; }
     .container .fifteen.columns                 { width: 880px; }
-    .container .sixteen.columns                 { width: 940px; }
+    .container .sixteen.columns                 { width: 1000px; }
 
     .container .one-third.column                { width: 300px; }
     .container .two-thirds.column               { width: 620px; }
@@ -1875,7 +1881,7 @@ div.cloudzoom-ajax-loader {
         .container .thirteen.columns                { width: 604px; }
         .container .fourteen.columns                { width: 652px; }
         .container .fifteen.columns                 { width: 700px; }
-        .container .sixteen.columns                 { width: 748px; }
+        .container .sixteen.columns                 { width: 808px; }
 
         .container .one-third.column                { width: 236px; }
         .container .two-thirds.column               { width: 492px; }
@@ -1896,6 +1902,8 @@ div.cloudzoom-ajax-loader {
         .container .offset-by-thirteen              { padding-left: 624px; }
         .container .offset-by-fourteen              { padding-left: 672px; }
         .container .offset-by-fifteen               { padding-left: 720px; }
+  
+ 	    .footer										{ max-width: 808px !important; }
     }
 
 /*  #Mobile (Portrait)
@@ -1926,7 +1934,7 @@ div.cloudzoom-ajax-loader {
         .container .fifteen.columns,
         .container .sixteen.columns,
         .container .one-third.column,
-        .container .two-thirds.column  { width: 300px; }
+        .container .two-thirds.column  { width: 340px; }
 
         .container .logo.column       { width: 200px; }
         .container .nav.column        { width: 90px; margin-left: 10px; }
@@ -1947,6 +1955,8 @@ div.cloudzoom-ajax-loader {
         .container .offset-by-thirteen,
         .container .offset-by-fourteen,
         .container .offset-by-fifteen { padding-left: 0; }
+  
+  		.footer						  { max-width: 340px !important; }
 
     }
 
@@ -1978,10 +1988,11 @@ div.cloudzoom-ajax-loader {
         .container .fifteen.columns,
         .container .sixteen.columns,
         .container .one-third.column,
-        .container .two-thirds.column { width: 420px; }
+        .container .two-thirds.column { width: 460px; }
 
         .container .logo.column       { width: 200px; }
         .container .nav.column        { width: 210px; margin-left: 10px; }
+  		.footer						  { max-width: 460px !important; }
     }
 
 /* #Clearing
@@ -2085,6 +2096,7 @@ div.cloudzoom-ajax-loader {
     }
     .credits_right {
       text-align: left;
+      color: #ffffff;
     }
     .container .column.thumbnail, .container .columns.thumbnail {
       margin-top: 1em;
@@ -2286,23 +2298,30 @@ ELLIEKAI Custom CSS
 .container.content {
 	/* border: 1px dashed red; */
   	background: #ffffff;
-  	padding: 20px;
+  	padding: 20px 20px 0 20px;
 }
 
 .homepage_content > .container {
    	background: #ffffff;
   	padding: 20px;
+  	border-left: 1px solid #dce3e5;
+  	border-right: 1px solid #dce3e5;
 }
 
 .footer {
  	border-top: none !important;
   	background-color: transparent !important;
-  	margin-top: -10px;
+  	margin-top: 0px; 
+    max-width: 1000px;
+    margin: 0 auto;
+    border-right: 1px solid #dce3e5;
+    border-left: 1px solid #dce3e5;
 }
 
 .footer > .container {
-  	background: #ffffff;
-  	/* padding: 20px; */
+  	background: #f8f1e9;
+  	/* padding: 20px; */  
+    width: 100%;
 }
 
 .footer > .container > .three.columns,
@@ -2313,12 +2332,12 @@ ELLIEKAI Custom CSS
 }
 
 body {
-	background: url("{{ 'EK-Bg-Pattern-v3.png' | asset_url }}") repeat fixed;
+	background: url("{{ 'custom_bg_grande.png' | asset_url }}") repeat fixed;
 }
 
 .flexslider {
- 	  border: 1px solid #d3d3d3;
-  	padding: 10px;
+ 	border: 1px solid #d3d3d3;
+  	padding: 0px;
   	background: #ffffff;
 }
 
@@ -2330,6 +2349,8 @@ body {
 .ek-header {
   	width: 100%;
   	background: #ffffff;
+  	border-bottom: 1px solid #dde4e6;
+    padding-bottom: 35px;
 }
 
 /* ELLIEKAIP1 > Dev > HTML > Fixing issue with H1 headers being cramped */
@@ -2344,12 +2365,16 @@ body {
 }
 
 .final-footer {
-  background: #c1c1c1;
   box-sizing: border-box;
   height: 70px;
   padding: 20px;
 }
-
+.footer-bg {
+  background: #859095;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: -10px;
+}
 /* Styles for fabric switcher */
 /* Better clearfix */
 .group {
