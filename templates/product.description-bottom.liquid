@@ -1,4 +1,4 @@
-<div class="sixteen columns">
+<div class="sixteen columns" style="width:100%;">
   <div class="clearfix breadcrumb">
     <div class="right">
         {% if collection.previous_product %}
@@ -12,9 +12,9 @@
     </div>
 
     {% if collection %}
-      <a href="{{ collection.url }}" title="{{ collection.title | escape }}">&lt; {{ collection.title }}</a>
+      <a href="{{ collection.url }}" class="left2" title="{{ collection.title | escape }}">&lt; {{ collection.title }}</a>
     {% else %}
-      <a href="/collections/all" title="All Products">&lt; All Products</a>
+      <a href="/collections/all" class="left2" title="All Products">&lt; All Products</a>
     {% endif %}
   </div>
 </div>
@@ -128,7 +128,7 @@
   {% endfor %}
     
   {% if col and collections[col].all_products_count > 0 %}
-    <div class="sixteen columns">
+    <div class="sixteen columns" style="width:100%;">
       <h2>{{ settings.related_products_title }}</h2>
     </div>
 

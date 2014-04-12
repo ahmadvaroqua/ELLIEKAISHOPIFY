@@ -412,7 +412,7 @@ ul.top_menu li a:hover {
 }
 
 .container div.collection_nav {
-  	
+  width: 100%;
   padding-bottom: 20px;
   margin-bottom: 0em;
 }
@@ -716,7 +716,7 @@ textarea {
 
 {% if settings.table_styles_enabled %}
   table a:link {
-    color: #666;
+    color: #ccc;
     font-weight: bold;
     text-decoration:none;
   }
@@ -732,21 +732,21 @@ textarea {
     }
   table {
       color:#666;
-      text-shadow: 1px 1px 0px #fff;
+      text-shadow: 0px 0px 0px #fff;
       background:#eaebec;
-      border:#ccc 1px solid;
+      border:#ccc 0px solid;
       margin-bottom: 20px;
       -moz-border-radius:2px;
       -webkit-border-radius:2px;
-      border-radius:2px;
+      border-radius:0px;
     }
   table img {
       max-width: inherit !important;
     }
   table th {
       padding:15px 20px;
-      border-top:1px solid #ccc;
-      border-bottom:1px solid #e0e0e0;
+      border-top:0px solid #ccc;
+      border-bottom:0px solid #e0e0e0;
       background: #ededed;
       background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
       background: -moz-linear-gradient(top,  #ededed,  #ebebeb);
@@ -775,9 +775,9 @@ textarea {
     }
   table tr td {
       padding:12px;
-      border-bottom:1px solid #e0e0e0;
-      border-left: 1px solid #e0e0e0;
-      background: #fafafa;
+      border-bottom:0px solid #e0e0e0;
+      border-left: 0px solid #e0e0e0;
+      background: #ffffff;
       background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#fafafa));
       background: -moz-linear-gradient(top,  #fbfbfb,  #fafafa);
     }
@@ -785,7 +785,7 @@ textarea {
       margin-bottom: 0;
     }
   table tr.even td{
-      background: #f6f6f6;
+      background: #ffffff;
       background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f6f6f6));
       background: -moz-linear-gradient(top,  #f8f8f8,  #f6f6f6);
     }
@@ -800,7 +800,7 @@ textarea {
       border-bottom-right-radius:3px;
     }
   table tr:hover td{
-      background: #f2f2f2;
+      background: #ffffff;
       background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#f0f0f0));
       background: -moz-linear-gradient(top,  #f2f2f2,  #f0f0f0);
     }
@@ -808,13 +808,21 @@ textarea {
 
 table tr.order_summary td.label { text-align: right;}
 
+.styleboard-table, .styleboard-table tr td {
+  background: #fff;
+  border: none !important;
+  margin: 0;
+  padding: 0 !important;
+}
+
 /* #Misc
 ================================================== */
 .remove{ color: {{ settings.regular_color }}; }
 .half-bottom { margin-bottom: 10px !important; }
 .add-bottom { margin-bottom: 20px !important; }
-.right { float:right; position: relative; }
+.right { float:right; position: relative; margin: 10px 15px 0;}
 .left { float: left; }
+.left2 {margin: 10px 0 0 0; float: left;}
 .center { text-align: center; }
 .relative { position: relative; }
 .align_right { text-align:right }
@@ -1253,8 +1261,7 @@ div.hidden { display: none; }
     color: {{ settings.footer_text_color }};
     padding: 0px 0;   
   }
-  .footer p {
-    margin-bottom: 10px;
+  .footer p {   
   }
   .footer a {
     color: {{ settings.footer_link_color }};
@@ -1284,7 +1291,7 @@ div.hidden { display: none; }
     background-color: #fff;
   }
   .payment_methods {
-    margin: 4px 0 6px 0;
+    margin: 0px 0 0px 0;
   }
   .payment_methods img {
     padding-right: 4px;
@@ -1297,7 +1304,7 @@ div.hidden { display: none; }
   }
   .credits {
   	color: #ffffff;
-  }
+  } 
   .icons {
     list-style: none outside;
     margin-left: 0;
@@ -1806,7 +1813,7 @@ div.cloudzoom-ajax-loader {
     .container                                  { position: relative; width: 960px; margin: 0 auto; padding: 0; }
     .container .column,
     .container .columns                         { float: left; display: inline; margin-left: 10px; margin-right: 10px; }
-	.container .columns2                         { float: left; display: inline; margin-left: 0px; margin-right: 0px; }
+	.container .columns2                         { float: left; display: inline; margin-left: 10px; margin-right: 10px; }
     .row                                        { margin-bottom: 20px; }
 
     /* Nested Column Classes */
@@ -1830,7 +1837,15 @@ div.cloudzoom-ajax-loader {
     .container .thirteen.columns                { width: 760px; }
     .container .fourteen.columns                { width: 820px; }
     .container .fifteen.columns                 { width: 880px; }
-    .container .sixteen.columns                 { width: 1000px; }
+    .container .sixteen.columns                 { max-width: 1000px; }
+	.container .sixteen2.columns				{ max-width: 1000px; width: 100%; }
+
+	
+	/* CSS Styles by ERIC ALVES */
+	.sb-fleximage {max-width:100% !important;}
+	.container .five.columns.sb-featured-image {width: 265px; margin: -230px 0 20px 0;}
+	.container .five.columns.sb-text-area {width: 345px; margin: 0 20px 20px 20px;}
+	.container .five.columns.sb-other-styles {margin: 0 0 20px 0; text-align: right;}
 
     .container .one-third.column                { width: 300px; }
     .container .two-thirds.column               { width: 620px; }
@@ -1881,7 +1896,7 @@ div.cloudzoom-ajax-loader {
         .container .thirteen.columns                { width: 604px; }
         .container .fourteen.columns                { width: 652px; }
         .container .fifteen.columns                 { width: 700px; }
-        .container .sixteen.columns                 { width: 808px; }
+        .container .sixteen.columns                 { max-width: 808px; }
 
         .container .one-third.column                { width: 236px; }
         .container .two-thirds.column               { width: 492px; }
@@ -1934,7 +1949,7 @@ div.cloudzoom-ajax-loader {
         .container .fifteen.columns,
         .container .sixteen.columns,
         .container .one-third.column,
-        .container .two-thirds.column  { width: 340px; }
+        .container .two-thirds.column  { ma-width: 340px; }
 
         .container .logo.column       { width: 200px; }
         .container .nav.column        { width: 90px; margin-left: 10px; }
@@ -1988,7 +2003,7 @@ div.cloudzoom-ajax-loader {
         .container .fifteen.columns,
         .container .sixteen.columns,
         .container .one-third.column,
-        .container .two-thirds.column { width: 460px; }
+        .container .two-thirds.column { max-width: 460px; }
 
         .container .logo.column       { width: 200px; }
         .container .nav.column        { width: 210px; margin-left: 10px; }
@@ -2350,7 +2365,7 @@ body {
   	width: 100%;
   	background: #ffffff;
   	border-bottom: 1px solid #dde4e6;
-    padding-bottom: 35px;
+    padding-bottom: 20px;
 }
 
 /* ELLIEKAIP1 > Dev > HTML > Fixing issue with H1 headers being cramped */
@@ -2365,9 +2380,11 @@ body {
 }
 
 .final-footer {
-  box-sizing: border-box;
-  height: 70px;
-  padding: 20px;
+  box-sizing: border-box;  
+  padding: 13px 20px 5px 20px;
+}
+.final-footer p {
+  margin:0;
 }
 .footer-bg {
   background: #859095;
@@ -2438,6 +2455,15 @@ h2, h3 {
 
 h2 {
   line-height: 1.3;
+}
+
+.sb-header {
+	font-family: garamond;
+	font-weight: bold;
+	font-size: 38px;
+	line-height: 38px;
+	margin-top: 40px;
+	color: #ca8751;
 }
 
 h3 {

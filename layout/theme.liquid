@@ -92,6 +92,7 @@
 
     <meta name="author" content="{{ shop.name }}">
 
+
     <!-- Mobile Specific Metas -->
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -101,10 +102,11 @@
     {{ 'styles.css' | asset_url | stylesheet_tag }}
     {{ 'reveal.css' | asset_url | stylesheet_tag }}
     {{ 'wufoo.css' | asset_url | stylesheet_tag }}
+
     <!--[if lte IE 8]>
       {{ 'ie.css' | asset_url | stylesheet_tag }}
     <![endif]-->
-
+<link rel="stylesheet" href="//releases.flowplayer.org/5.4.6/skin/minimalist.css" >
 
     <!-- Icons -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ 'favicon.png' | asset_url }}">
@@ -125,9 +127,7 @@
         {{ 'json2.js' | shopify_asset_url | script_tag }}
       <![endif]-->
     {% endif %}
-<link rel="stylesheet" href="//releases.flowplayer.org/5.4.6/skin/minimalist.css" >
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="//releases.flowplayer.org/5.4.6/flowplayer.min.js"></script>
+
     <!-- jQuery and jQuery fallback -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script>window.jQuery || document.write("<script src='{{ "jquery-1.8.3.min.js" | asset_url }}'>\x3C/script>")</script>
@@ -209,6 +209,7 @@
                 </li>
               {% endfor %}
             {% endif %}
+            <li><a href="http://www.elliekai.com/pages/contact-us">Contact</a></li>
             {% if shop.customer_accounts_enabled %}
               <li>
                 <a href="/account" title="My Account {% if customer %}({{ customer.email }}){% endif %}">My Account</a>

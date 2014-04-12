@@ -1,8 +1,8 @@
-  <div class="sixteen columns clearfix collection_nav">
+<div class="sixteen columns clearfix collection_nav">
     <h1 class="collection_title">Cart</h1>
   </div>
 
-  <div class="sixteen columns">
+<div class="sixteen columns">
     <div class="clearfix breadcrumb">
       {% if cart.item_count != 0 %}
         <a href="{% if cart.items.first.product.collections != blank %}{{ cart.items.first.product.collections.last.url }}{% else %}/collections/all{% endif %}">&lt; Continue Shopping</a>
@@ -11,7 +11,7 @@
   </div>
 
   {% if cart.item_count == 0 %}
-    <div class="sixteen columns">
+<div class="sixteen columns">
       <div class="section clearfix">
         <p class="quote">There are no items in your cart. <a href="/collections/all">Continue Shopping &rarr;</a></p>
         <br class="clear" />
@@ -44,7 +44,7 @@
 
         <ul class="none">
         {% for item in cart.items %}
-          <li>
+          <li style="padding-bottom: 150px;">
           <div class="eight columns title_column alpha">
              <a class="cart_image" href="{{ item.product.url }}" title="{{ item.product.title | escape }}">
                {% assign found = false %}
