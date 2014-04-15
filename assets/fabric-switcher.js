@@ -51,10 +51,9 @@ $(document).ready(function(){
       $('#size').append(opt);
     }
 
-    // Hide the size dropdown if only one or 0 sizes available
-    if (num_sizes <= 1){
-      console.log("Only 1 or 0 sizes.");
-      $('#size-dropdown').hide();
+    // Show size dropdown selector
+    if (num_sizes > 1){
+      $('#size-dropdown').show();
     }
 
     // -------------------------------
