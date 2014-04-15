@@ -1,23 +1,7 @@
-//$(document).ready(function(){
-$(window).load(function() {
+// NOTE: How to disable submit button until all validation passes
+// http://www.plus2net.com/javascript_tutorial/form-submit.php
 
-  /*
-  // Browser Sniffing
-  console.log($.browser);
-  console.log($.browser.version);
-
-  // Check if old Safari
-  if ($.browser.safari == true && parseFloat($.browser.version) < 536){
-    console.log("Old Safari");
-    $('a.outdated-browser-popup-link').trigger('click')
-  }
-
-  // Check if old IE
-  if ($.browser.msie == true && parseFloat($.browser.version) < 10){
-    console.log("Old IE");
-    $('a.outdated-browser-popup-link').trigger('click')
-  }
-  */
+$(document).ready(function(){
 
   var shopify_handle = $.url('filename');
 
@@ -33,15 +17,13 @@ $(window).load(function() {
     console.log("Production mode");
     var json_url = "http://dressingroom.elliekai.com/products/";
   }
-  //-------------------------------
 
-  // var request = $.getJSON("http://dressingroom.elliekai.com/products/" + shopify_handle + ".json").done(function(data) {
-  // var request = $.getJSON("http://dressingroom-dev.elliekai.com/products/" + shopify_handle + ".json").done(function(data) {
+  //-------------------------------
+  // Get product data from CRM via AJAX
   var request = $.getJSON(json_url + shopify_handle + ".json").done(function(data) {
 
     // -------------------------------
-    // Need this global for filtering swatches by fabric later
-    // after the AJAX call
+    // Need this global for filtering swatches by fabric later after the AJAX call
     json_data = data;
 
     // -------------------------------
@@ -50,24 +32,12 @@ $(window).load(function() {
       $('#swatches').append("<a href='#' id='" + data.patterns[i].sku + "' --data-sku='" + data.patterns[i].sku + "' --data-fabric='" + data.patterns[i].fabric_type + "' --data-name='" + data.patterns[i].name + "' --data-swatch-index='" + (i + 1) + "'><img src='http://ellie-kai.s3.amazonaws.com/assets/fabrics-new-100x100/" + data.patterns[i].sku + ".jpg' alt='" + data.patterns[i].name + "'/></a>");
     }
 
-    // console.log("Number of swatches available: " + data.patterns.length);
-
     // If there are swatches, enforce validation, i.e. must pick one.
     if (data.patterns.length > 0){
   	  $('#add-to-cart').addClass("disabled-button");
   	  $('#add-to-cart').attr("disabled", "true");
   	  $("#pattern-name-display").html("Please select a fabric:");
     }
-
-    /*
-    console.log("Number of sizes available: " + data.sizes.length);
-    // If there is more than one size, enforce validation
-    if (data.sizes.length > 0){
-  	  $('#add-to-cart').addClass("disabled-button");
-  	  $('#add-to-cart').attr("disabled", "true");
-  	  $("#pattern-name-display").html("Please select a size:");
-    }
-    */
 
     // -------------------------------
     // Sizes
@@ -150,23 +120,15 @@ $(window).load(function() {
   // -------------------------------
   // What happens when a size is picked
   $("#size").change(function(){
-    var size = $('#size').val();
-    // console.log("Size changed to: " + size);
   	$("#size-validation-message").html("");
+    validate_form();
+  });
 
-    var fabric = $("#fabric").val();
-    // console.log("Current fabric is: " + fabric);
-
-    if (!fabric) {
-      // console.log("No fabric.");
-      // Don't activate the Add to Cart button
-    }
-    else {
-      // console.log("We have a fabric");
-      // We have a fabric selected so safe to activate the Add to Cart button
-      $('#add-to-cart').removeClass("disabled-button");
-  	  $('#add-to-cart').removeAttr("disabled");
-    }
+  // -------------------------------
+  // What happens when a length is picked
+  $("#length").change(function(){
+  	$("#length-validation-message").html("");
+    validate_form();
   });
 
   // -------------------------------
@@ -194,7 +156,6 @@ $(window).load(function() {
     $('#' + swatch_id).addClass('selected');
 
     // Update the pattern display so customer knows name of pattern
-    // $("#pattern-name-display").html(pattern_name + ' (' + fabric_name + ')');
     $("#pattern-name-display").html(pattern_name + ' (' + fabric_name + ' / ' + fabric_sku + ')');
 
     // Update the product image with the new selected fabric from swatch
@@ -205,17 +166,42 @@ $(window).load(function() {
     // For zoom
     $('#product_slider > ul > li > a > img').attr("data-cloudzoom", "zoomImage: 'http://ellie-kai.s3.amazonaws.com/assets/products-600x947/" + product_name + "-" + fabric_sku + ".jpg', tintColor: '#ffffff', zoomPosition: 'inside'");
 
-    // Fabric was selected, activate the add-to-cart button:
-    var size = $('#size').val();
+    // Validate form
+    validate_form();
 
-	  // console.log("Selected size: " + size);
-	  // console.log("Available sizes: " + num_lengths);
+    // Need to rerun CloudZoom in order to pick changes to the DOM after rendering (like fabric swatch picking)
+    $('.cloudzoom').CloudZoom();
 
-    // If there is more than one length option and no size is picked, disable the add to cart button.
+  });
+
+  //-------------------------------
+  // Enable/Disable submit button
+  function validate_form(){
+
+    var fabric = $("#fabric").val();
+    var size = $("#size").val();
+    var length = $("#length").val();
+    var local_errors = false;
+
+    // Validate size
     if (num_sizes > 1 && !size){
-	    console.log("Please select a size.");
-
   	  $("#size-validation-message").html("Please select a size:");
+      local_errors = true;
+    }
+
+    // Validate length
+    if (num_lengths > 1 && !length){
+  	  $("#length-validation-message").html("Please select a length:");
+      local_errors = true;
+    }
+
+    // Validate swatch
+    if ($("#swatches").length && !fabric){
+      local_errors = true;
+    }
+
+    // Show or hide submit button
+    if (local_errors === true){
       $('#add-to-cart').addClass("disabled-button");
   	  $('#add-to-cart').attr("disabled");
     }
@@ -224,14 +210,6 @@ $(window).load(function() {
   	  $('#add-to-cart').removeAttr("disabled");
     }
 
-    // Fabric was selected, activate the add-to-cart button:
-	  // console.log("A fabric was picked. Activate the add-to-cart button.");
-    // $('#add-to-cart').removeClass("disabled-button");
-  	// $('#add-to-cart').removeAttr("disabled");
-
-    // Need to rerun CloudZoom in order to pick changes to the DOM after rendering (like fabric swatch picking)
-    $('.cloudzoom').CloudZoom();
-
-  });
+  }
 
 });
