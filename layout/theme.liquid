@@ -684,7 +684,7 @@
       var consultant_url_value = $.url('?consultant_id');
       var trunk_show_url_value = $.url('?trunk_show_id');
       var channel_url_value = $.url('?channel');
-      var orginal_order_url_value = $.url('?original_order_id');
+      var original_order_url_value = $.url('?original_order_id');
 
       var refresh_url_value = $.url('?refresh');
 
@@ -722,6 +722,8 @@
           // console.debug('Channel URL is not empty, dropping cookie.');
           $.cookie('channel', channel_url_value, { expires: 1, path: '/' });
         }
+
+        console.log("hello");
 
         // Original Order ID URL is not empty, drop a cookie
         if (original_order_url_value != null){
