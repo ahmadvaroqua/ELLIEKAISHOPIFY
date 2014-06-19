@@ -224,4 +224,13 @@
     $('#form_trunk_show_id').val($.cookie('trunk_show_id'));
     $('#form_channel').val($.cookie('channel'));
     $('#form_original_order_id').val($.cookie('original_order_id'));
+
+    // TODO: This is some experimental stuff. This needs to be QA'ed
+    // thoroughly. Basically, it would delete the cookies after the form
+    // was filled out.
+    /*
+    $.removeCookie('channel', { path: '/' });
+    $.removeCookie('original_order_id', { path: '/' });
+    */
+
   </script>
