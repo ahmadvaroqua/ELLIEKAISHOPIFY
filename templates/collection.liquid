@@ -2,7 +2,6 @@
   {% assign tag_count = collection.all_tags | size %}
   {% assign tag_threshold = 8 %}
 
-  
   {% if collection.description != blank %}
 <div class="sixteen columns" style="margin: 0 -20px; ">
       <div class="section clearfix">
@@ -24,54 +23,3 @@
       {% include 'pagination' %}
     {% endif %}
 {% endpaginate %}
-
-<script type="text/javascript">
-  // These are the current cookie values
-  var consultant_cookie_value = $.cookie('consultant_id');
-  var trunk_show_cookie_value = $.cookie('trunk_show_id');
-
-  // These are the referral codes in the URL if present
-  var consultant_url_value = $.url('?consultant_id');
-  var trunk_show_url_value = $.url('?trunk_show_id');
-  var refresh_url_value = $.url('?refresh');
-
-  // Refresh
-  if (refresh_url_value == 'true'){
-    // console.debug("Refresh is true.");
-    // Refresh is true
-    // Delete all cookies
-    $.removeCookie('consultant_id', { path: '/' });
-    $.removeCookie('trunk_show_id', { path: '/' });
-  }
-  else {
-    // console.debug("Refresh is false.");
-    // Refresh is false
-    // Leave existing cookies intact. If the URL contains consultant or trunk show
-    // info, drop/update the cookie. From then on the cookies will live until
-    // you go to http://shop.elliekai.com/collections/all?refresh=true
-
-    // Consultant URL is not empty, drop a cookie
-    if (consultant_url_value != null){
-      // console.debug('Consultant URL is not empty, dropping cookie.');
-      $.cookie('consultant_id', consultant_url_value, { expires: 1, path: '/' });
-    }
-
-    // Trunk Show URL is not empty, drop a cookie
-    if (trunk_show_url_value != null){
-      // console.debug('Trunk Show URL is not empty, dropping cookie.');
-      $.cookie('trunk_show_id', trunk_show_url_value, { expires: 1, path: '/' });
-    }
-
-  }
-
-  /*
-  console.debug("-----------");
-  console.debug('consultant_url_value: ' + consultant_url_value);
-  console.debug('trunk_show_url_value: ' + trunk_show_url_value);
-  console.debug('refresh_url_value: ' + refresh_url_value);
-  console.debug("-----------");
-  console.debug('consultant_cookie_value: ' + consultant_cookie_value);
-  console.debug('trunk_show_cookie_value: ' + trunk_show_cookie_value);
-  console.debug("-----------");
-  */
-</script>

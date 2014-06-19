@@ -92,7 +92,6 @@
 
     <meta name="author" content="{{ shop.name }}">
 
-
     <!-- Mobile Specific Metas -->
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -263,7 +262,7 @@
           <li class="navicon_button">
             <a href="#" class="navicon" title="View Menu">Menu</a>
           </li>
-          
+
         </ul>
       </div>
       <!--
@@ -299,7 +298,6 @@
   </div>
 
       -->
-      
 
       </div>
 
@@ -547,8 +545,6 @@
               }
             </style>
 
-          
-
             {% if settings.use_paypal %}<img src="{{ 'cc-paypal.gif' | asset_url }}" alt="PayPal" />{% endif %}
             {% if settings.use_google_checkout %}<img src="{{ 'cc-google.gif' | asset_url }}" alt="Google Checkout" />{% endif %}
             {% if settings.use_visa %}<img src="{{ 'cc-visa.gif' | asset_url }}" alt="Visa" />{% endif %}
@@ -681,10 +677,15 @@
       // These are the current cookie values
       var consultant_cookie_value = $.cookie('consultant_id');
       var trunk_show_cookie_value = $.cookie('trunk_show_id');
+      var channel_cookie_value = $.cookie('channel');
+      var original_order_cookie_value = $.cookie('original_order_id');
 
       // These are the referral codes in the URL if present
       var consultant_url_value = $.url('?consultant_id');
       var trunk_show_url_value = $.url('?trunk_show_id');
+      var channel_url_value = $.url('?channel');
+      var orginal_order_url_value = $.url('?original_order_id');
+
       var refresh_url_value = $.url('?refresh');
 
       // Refresh
@@ -694,6 +695,8 @@
         // Delete all cookies
         $.removeCookie('consultant_id', { path: '/' });
         $.removeCookie('trunk_show_id', { path: '/' });
+        $.removeCookie('channel', { path: '/' });
+        $.removeCookie('original_order_id', { path: '/' });
       }
       else {
         // console.debug("Refresh is false.");
@@ -714,6 +717,18 @@
           $.cookie('trunk_show_id', trunk_show_url_value, { expires: 1, path: '/' });
         }
 
+        // Channel URL is not empty, drop a cookie
+        if (channel_url_value != null){
+          // console.debug('Channel URL is not empty, dropping cookie.');
+          $.cookie('channel', channel_url_value, { expires: 1, path: '/' });
+        }
+
+        // Original Order ID URL is not empty, drop a cookie
+        if (original_order_url_value != null){
+          // console.debug('Original Order ID URL is not empty, dropping cookie.');
+          $.cookie('original_order_id', original_order_url_value, { expires: 1, path: '/' });
+        }
+
       }
 
       /*
@@ -726,7 +741,9 @@
       console.debug('trunk_show_cookie_value: ' + trunk_show_cookie_value);
       console.debug("-----------");
       */
+
     </script>
+
 	<script type="text/javascript">
   /* <![CDATA[ */
   document.write (
