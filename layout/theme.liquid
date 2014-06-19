@@ -209,10 +209,11 @@
                 </li>
               {% endfor %}
             {% endif %}
+            <li><a href="http://www.elliekai.com/pages/press">Press</a></li>
             <li><a href="http://www.elliekai.com/pages/contact-us">Contact</a></li>
             {% if shop.customer_accounts_enabled %}
               <li>
-                <a href="/account" title="My Account {% if customer %}({{ customer.email }}){% endif %}">My Account</a>
+                <a href="/account" title="My Account {% if customer %}({{ customer.email }}){% endif %}">Login</a>
               </li>
               {% if customer %}
                 <li>
@@ -227,6 +228,9 @@
                 </form>
               </li>
             {% endif %}
+            <li>
+            <a href="/cart" class="cart {% if cart.item_count > 0 %}active{% endif %}" title="Shopping Cart">Cart{% if cart.item_count > 0 %}<span class="cart_count"> ({{ cart.item_count }})</span>{% endif %}</a>
+          </li>
           </ul>
           <ul class="main menu">
             {% for link in linklists[settings.main_linklist].links %}
@@ -259,9 +263,7 @@
           <li class="navicon_button">
             <a href="#" class="navicon" title="View Menu">Menu</a>
           </li>
-          <li>
-            <a href="/cart" class="cart {% if cart.item_count > 0 %}active{% endif %}" title="Shopping Cart">Cart{% if cart.item_count > 0 %}<span class="cart_count"> ({{ cart.item_count }})</span>{% endif %}</a>
-          </li>
+          
         </ul>
       </div>
       <!--
@@ -410,8 +412,8 @@
               <p>{{ settings.newsletter_description }}</p>
             {% endif %}
 
-              <form action="http://varoquagroup.createsend.com/t/r/s/trlyyuh/" method="post">
-                <input id="fieldEmail" name="cm-trlyyuh-trlyyuh" type="email" required placeholder="email" class="popup-email" style="width: 200px; display: inline;"/>
+              <form action="http://marketing.elliekai.com/acton/eform/9109/0006/d-ext-0001" method="post">
+                <input id="fieldEmail" name="E-mail Address" type="email" required placeholder="email" class="popup-email" style="width: 200px; display: inline;"/>
                 <button type="submit" style="display: inline;">Subscribe</button>
               </form>
 
@@ -725,5 +727,18 @@
       console.debug("-----------");
       */
     </script>
+	<script type="text/javascript">
+  /* <![CDATA[ */
+  document.write (
+    '<img src="http://elliekai.actonsoftware.com/acton/bn/9109/visitor.gif?ts='+
+    new Date().getTime()+
+    '&ref='+escape(document.referrer) + '">'
+  );
+  var aoAccountId = '9109';
+  var aoCookieMode = 'STANDARD';
+  var aoCookieDomain = 'actonsoftware.com';
+  var aoServerContext = 'http://elliekai.actonsoftware.com/acton';
+  /* ]]> */
+</script>
   </body>
 </html>

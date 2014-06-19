@@ -210,5 +210,12 @@ $(document).ready(function(){
     }
 
   }
+  
+  
+  //-------------------------------
+  // EKRETAINER > Dev > Add alternate images
+  if ($('#alt-image-group').length){
+    $("#product_slider").append($("#alt-image-group"));
+  }   
 
 });
