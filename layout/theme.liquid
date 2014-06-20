@@ -699,6 +699,15 @@
         $.removeCookie('original_order_id', { path: '/' });
       }
       else {
+
+        // Let's do some date math to expire some of these cookies
+        // in 15 minutes (like the Staff and Hostess sell links).
+        var date = new Date();
+        var minutes = 15;
+        date.setTime(date.getTime() + (minutes * 60 * 1000));
+
+        $.cookie("example", "foo", { expires: date });
+
         // console.debug("Refresh is false.");
         // Refresh is false
         // Leave existing cookies intact. If the URL contains consultant or trunk show
@@ -720,13 +729,13 @@
         // Channel URL is not empty, drop a cookie
         if (channel_url_value != null){
           // console.debug('Channel URL is not empty, dropping cookie.');
-          $.cookie('channel', channel_url_value, { expires: 1, path: '/' });
+          $.cookie('channel', channel_url_value, { expires: date, path: '/' });
         }
 
         // Original Order ID URL is not empty, drop a cookie
         if (original_order_url_value != null){
           // console.debug('Original Order ID URL is not empty, dropping cookie.');
-          $.cookie('original_order_id', original_order_url_value, { expires: 1, path: '/' });
+          $.cookie('original_order_id', original_order_url_value, { expires: date, path: '/' });
         }
 
       }
