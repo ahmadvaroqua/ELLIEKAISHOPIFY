@@ -10,11 +10,11 @@ $(document).ready(function(){
   var subdomain = $.url('sub');
 
   if (subdomain === 'shop-dev'){
-    console.log("Development mode");
+    // console.log("Development mode");
     var json_url = "http://dressingroom-dev.elliekai.com/products/";
   }
   else {
-    console.log("Production mode");
+    // console.log("Production mode");
     var json_url = "http://dressingroom.elliekai.com/products/";
   }
 
@@ -210,12 +210,11 @@ $(document).ready(function(){
     }
 
   }
-  
-  
+
   //-------------------------------
   // EKRETAINER > Dev > Add alternate images
   if ($('#alt-image-group').length){
     $("#product_slider").append($("#alt-image-group"));
-  }   
+  }
 
 });
