@@ -103,6 +103,22 @@ $(document).ready(function(){
       $('#buttons').append(opt);
     }
 
+    // -------------------------------
+    // Customization
+    var customization = data.customization;
+    num_customization = customization.length
+
+    if (num_customization > 1){
+      $('#customization-dropdown-selector').show();
+    }
+
+    for (var i = 0; i < customization.length; i++) {
+      var opt = document.createElement('option');
+      opt.value = customization[i].customization;
+      opt.text = customization[i].customization;
+      $('#customization').append(opt);
+    }
+
   });
 
   request.done(function( msg ) {
@@ -127,6 +143,13 @@ $(document).ready(function(){
   // What happens when a length is picked
   $("#length").change(function(){
   	$("#length-validation-message").html("");
+    validate_form();
+  });
+
+  // -------------------------------
+  // What happens when a customization is picked
+  $("#customization").change(function(){
+  	$("#customization-validation-message").html("");
     validate_form();
   });
 
@@ -180,6 +203,7 @@ $(document).ready(function(){
     var fabric = $("#fabric").val();
     var size = $("#size").val();
     var length = $("#length").val();
+    var customization = $("#customization").val();
     var local_errors = false;
 
     // Validate size
@@ -191,6 +215,12 @@ $(document).ready(function(){
     // Validate length
     if (num_lengths > 1 && !length){
   	  $("#length-validation-message").html("Please select a length:");
+      local_errors = true;
+    }
+
+    // Validate customization
+    if (num_customization > 1 && !customization){
+  	  $("#customization-validation-message").html("Please select a customization option:");
       local_errors = true;
     }
 
